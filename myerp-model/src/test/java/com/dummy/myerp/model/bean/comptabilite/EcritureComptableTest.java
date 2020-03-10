@@ -32,9 +32,9 @@ public class EcritureComptableTest {
     public void givenListLigneEcriture_whenGetTotalDebit_thenReturnSumOfDebit (){
         // GIVEN
         classUnderTest.getListLigneEcriture().add(this.createLigne(1, "200.50", null));
-        classUnderTest.getListLigneEcriture().add(this.createLigne(1, "100.50", "33"));
-        classUnderTest.getListLigneEcriture().add(this.createLigne(2, null, "301"));
-        classUnderTest.getListLigneEcriture().add(this.createLigne(2, "40", "7"));
+        classUnderTest.getListLigneEcriture().add(this.createLigne(1, "100.50", "33.00"));
+        classUnderTest.getListLigneEcriture().add(this.createLigne(2, null, "301.00"));
+        classUnderTest.getListLigneEcriture().add(this.createLigne(2, "40.00", "7.00"));
 
         // WHEN
         BigDecimal resultTest = classUnderTest.getTotalDebit();
@@ -47,9 +47,9 @@ public class EcritureComptableTest {
     public void givenListLigneEcriture_whenGetTotalCredit_thenReturnSumOfCredit (){
         // GIVEN
         classUnderTest.getListLigneEcriture().add(this.createLigne(1, "200.50", null));
-        classUnderTest.getListLigneEcriture().add(this.createLigne(1, "100.50", "33"));
-        classUnderTest.getListLigneEcriture().add(this.createLigne(2, null, "301"));
-        classUnderTest.getListLigneEcriture().add(this.createLigne(2, "40", "7"));
+        classUnderTest.getListLigneEcriture().add(this.createLigne(1, "100.50", "33.00"));
+        classUnderTest.getListLigneEcriture().add(this.createLigne(2, null, "301.00"));
+        classUnderTest.getListLigneEcriture().add(this.createLigne(2, "40.00", "7.00"));
 
         // WHEN
         BigDecimal resultTest = classUnderTest.getTotalCredit();
@@ -63,15 +63,15 @@ public class EcritureComptableTest {
         // GIVEN
         classUnderTest.setLibelle("Equilibrée");
         classUnderTest.getListLigneEcriture().add(this.createLigne(1, "200.50", null));
-        classUnderTest.getListLigneEcriture().add(this.createLigne(1, "100.50", "33"));
-        classUnderTest.getListLigneEcriture().add(this.createLigne(2, null, "301"));
-        classUnderTest.getListLigneEcriture().add(this.createLigne(2, "40", "7"));
+        classUnderTest.getListLigneEcriture().add(this.createLigne(1, "100.50", "33.00"));
+        classUnderTest.getListLigneEcriture().add(this.createLigne(2, null, "301.00"));
+        classUnderTest.getListLigneEcriture().add(this.createLigne(2, "40.00", "7.00"));
 
         // WHEN
         boolean resultTest = classUnderTest.isEquilibree();
 
         // THEN
-        assertThat(resultTest).isEqualTo(classUnderTest.getLibelle().equalsIgnoreCase("Equilibrée"));
+        assertThat(resultTest).isEqualTo(true);
     }
 
     @Test
@@ -80,14 +80,14 @@ public class EcritureComptableTest {
         classUnderTest.setLibelle("Non équilibrée");
         classUnderTest.getListLigneEcriture().add(this.createLigne(1, "200.50", null));
         classUnderTest.getListLigneEcriture().add(this.createLigne(1, "100.50", null));
-        classUnderTest.getListLigneEcriture().add(this.createLigne(2, null, "301"));
-        classUnderTest.getListLigneEcriture().add(this.createLigne(2, "40", "80"));
+        classUnderTest.getListLigneEcriture().add(this.createLigne(2, null, "301.00"));
+        classUnderTest.getListLigneEcriture().add(this.createLigne(2, "40.00", "80.00"));
 
         // WHEN
         boolean resultTest = classUnderTest.isEquilibree();
 
         // THEN
-        assertThat(resultTest).isNotEqualTo(classUnderTest.getLibelle().equalsIgnoreCase("Equilibrée"));
+        assertThat(resultTest).isEqualTo(false);
     }
 
 

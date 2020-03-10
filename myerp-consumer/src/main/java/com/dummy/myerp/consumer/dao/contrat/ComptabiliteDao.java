@@ -80,4 +80,18 @@ public interface ComptabiliteDao {
      * @param pId l'id de l'écriture
      */
     void deleteEcritureComptable(Integer pId);
+
+    /**
+     * TODO à Implémenter
+     * @param ac
+     * @param i
+     * @return
+     */
+    String getSequenceEcritureComptable(String ac, int i);
+
+    /**
+     * TODO à Implémenter
+     * @param s
+     */
+    void saveSequenceEcritureComptable(String s);
 }

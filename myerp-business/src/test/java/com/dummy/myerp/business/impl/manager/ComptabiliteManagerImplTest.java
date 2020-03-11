@@ -85,8 +85,12 @@ public class ComptabiliteManagerImplTest {
         ecritureComptable.getListLigneEcriture().add(this.createLigne(1,"123.00",null));
         ecritureComptable.getListLigneEcriture().add(this.createLigne(2,null,"123.00"));
 
-        // WHEN & THEN
-        assertThrows(FunctionalException.class, () -> classUnderTest.checkEcritureComptableUnit(ecritureComptable));
+        // WHEN
+        FunctionalException exception =
+                assertThrows(FunctionalException.class, () -> classUnderTest.checkEcritureComptableUnit(ecritureComptable));
+
+        // THEN
+        assertThat(exception.getMessage()).isEqualTo("L'écriture comptable ne respecte pas les règles de gestion.");
     }
 
     @Test
@@ -100,8 +104,12 @@ public class ComptabiliteManagerImplTest {
         ecritureComptable.getListLigneEcriture().add(this.createLigne(1,"123.00",null));
         ecritureComptable.getListLigneEcriture().add(this.createLigne(2,null,"123.00"));
 
-        // WHEN & THEN
-        assertThrows(FunctionalException.class, () -> classUnderTest.checkEcritureComptableUnit(ecritureComptable));
+        // WHEN
+        FunctionalException exception =
+                assertThrows(FunctionalException.class, () -> classUnderTest.checkEcritureComptableUnit(ecritureComptable));
+
+        // THEN
+        assertThat(exception.getMessage()).isEqualTo("L'écriture comptable ne respecte pas les règles de gestion.");
     }
 
     @Test
@@ -115,8 +123,12 @@ public class ComptabiliteManagerImplTest {
         ecritureComptable.getListLigneEcriture().add(this.createLigne(1,"123.00",null));
         ecritureComptable.getListLigneEcriture().add(this.createLigne(2,null,"123.00"));
 
-        // WHEN & THEN
-        assertThrows(FunctionalException.class, () -> classUnderTest.checkEcritureComptableUnit(ecritureComptable));
+        // WHEN
+        FunctionalException exception =
+                assertThrows(FunctionalException.class, () -> classUnderTest.checkEcritureComptableUnit(ecritureComptable));
+
+        // THEN
+        assertThat(exception.getMessage()).isEqualTo("L'écriture comptable ne respecte pas les règles de gestion.");
     }
 
     @ParameterizedTest(name = "{0} => wrong reference pattern , should be type BQ-2020/00001 or 01-2020/00001")
@@ -131,8 +143,12 @@ public class ComptabiliteManagerImplTest {
         ecritureComptable.getListLigneEcriture().add(this.createLigne(1,"123.00",null));
         ecritureComptable.getListLigneEcriture().add(this.createLigne(2,null,"123.00"));
 
-        // WHEN & THEN
-        assertThrows(FunctionalException.class, () -> classUnderTest.checkEcritureComptableUnit(ecritureComptable));
+        // WHEN
+        FunctionalException exception =
+                assertThrows(FunctionalException.class, () -> classUnderTest.checkEcritureComptableUnit(ecritureComptable));
+
+        // THEN
+        assertThat(exception.getMessage()).isEqualTo("L'écriture comptable ne respecte pas les règles de gestion.");
     }
 
     @Test
@@ -146,8 +162,12 @@ public class ComptabiliteManagerImplTest {
         ecritureComptable.getListLigneEcriture().add(this.createLigne(1,"123.456",null));
         ecritureComptable.getListLigneEcriture().add(this.createLigne(2,null,"123.00"));
 
-        // WHEN & THEN
-        assertThrows(FunctionalException.class, () -> classUnderTest.checkEcritureComptableUnit(ecritureComptable));
+        // WHEN
+        FunctionalException exception =
+                assertThrows(FunctionalException.class, () -> classUnderTest.checkEcritureComptableUnit(ecritureComptable));
+
+        // THEN
+        assertThat(exception.getMessage()).isEqualTo("L'écriture comptable ne respecte pas les règles de gestion.");
     }
 
     @Test
@@ -161,8 +181,12 @@ public class ComptabiliteManagerImplTest {
         ecritureComptable.getListLigneEcriture().add(this.createLigne(1,"123.00",null));
         ecritureComptable.getListLigneEcriture().add(this.createLigne(2,null,"1234.00"));
 
-        // WHEN & THEN
-        assertThrows(FunctionalException.class, () -> classUnderTest.checkEcritureComptableUnit(ecritureComptable));
+        // WHEN
+        FunctionalException exception =
+                assertThrows(FunctionalException.class, () -> classUnderTest.checkEcritureComptableUnit(ecritureComptable));
+
+        // THEN
+        assertThat(exception.getMessage()).isEqualTo("L'écriture comptable n'est pas équilibrée.");
     }
 
     @Test
@@ -175,8 +199,12 @@ public class ComptabiliteManagerImplTest {
         ecritureComptable.setReference("01-2020/00001");
         ecritureComptable.getListLigneEcriture().add(this.createLigne(1,"123.00",null));
 
-        // WHEN & THEN
-        assertThrows(FunctionalException.class, () -> classUnderTest.checkEcritureComptableUnit(ecritureComptable));
+        // WHEN
+        FunctionalException exception =
+                assertThrows(FunctionalException.class, () -> classUnderTest.checkEcritureComptableUnit(ecritureComptable));
+
+        // THEN
+        assertThat(exception.getMessage()).isEqualTo("L'écriture comptable ne respecte pas les règles de gestion.");
     }
 
     @Test
@@ -190,8 +218,12 @@ public class ComptabiliteManagerImplTest {
         ecritureComptable.getListLigneEcriture().add(this.createLigne(1,"123.00",null));
         ecritureComptable.getListLigneEcriture().add(this.createLigne(2,"123.00",null));
 
-        // WHEN & THEN
-        assertThrows(FunctionalException.class, () -> classUnderTest.checkEcritureComptableUnit(ecritureComptable));
+        // WHEN
+        FunctionalException exception =
+                assertThrows(FunctionalException.class, () -> classUnderTest.checkEcritureComptableUnit(ecritureComptable));
+
+        // THEN
+        assertThat(exception.getMessage()).isEqualTo("L'écriture comptable n'est pas équilibrée.");
     }
 
     @Test
@@ -205,8 +237,12 @@ public class ComptabiliteManagerImplTest {
         ecritureComptable.getListLigneEcriture().add(this.createLigne(1,null,"123.00"));
         ecritureComptable.getListLigneEcriture().add(this.createLigne(2,null,"123.00"));
 
-        // WHEN & THEN
-        assertThrows(FunctionalException.class, () -> classUnderTest.checkEcritureComptableUnit(ecritureComptable));
+        // WHEN
+        FunctionalException exception =
+                assertThrows(FunctionalException.class, () -> classUnderTest.checkEcritureComptableUnit(ecritureComptable));
+
+        // THEN
+        assertThat(exception.getMessage()).isEqualTo("L'écriture comptable n'est pas équilibrée.");
     }
 
     @Test
@@ -220,8 +256,12 @@ public class ComptabiliteManagerImplTest {
         ecritureComptable.getListLigneEcriture().add(this.createLigne(1,"123.00",null));
         ecritureComptable.getListLigneEcriture().add(this.createLigne(2,null,"123.00"));
 
-        // WHEN & THEN
-        assertThrows(FunctionalException.class, () -> classUnderTest.checkEcritureComptableUnit(ecritureComptable));
+        // WHEN
+        FunctionalException exception =
+                assertThrows(FunctionalException.class, () -> classUnderTest.checkEcritureComptableUnit(ecritureComptable));
+
+        // THEN
+        assertThat(exception.getMessage()).isEqualTo("La référence de l'écriture comptable doit contenir l'année courante.");
     }
 
     @Test

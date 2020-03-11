@@ -190,7 +190,7 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
         int currentYear = Calendar.getInstance().get(Calendar.YEAR);
         int yearInReference = Integer.parseInt(reference[1]);
         if (currentYear != yearInReference) {
-            throw new FunctionalException("La référence de l'écriture comptable doit contenir l'année courante");
+            throw new FunctionalException("La référence de l'écriture comptable doit contenir l'année courante.");
         }
     }
 

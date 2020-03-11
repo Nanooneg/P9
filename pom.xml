@@ -423,12 +423,11 @@
                     <version>2.10.4</version>
                 </plugin>
 
-                <!-- ===== Aide au constructions particulières ===== -->
-                <!-- Ex : Ajout de répertoire de sources générées en tant que source d'un module -->
+                <!-- ===== Couverture de code avec Jacoco ===== -->
                 <plugin>
-                    <groupId>org.codehaus.mojo</groupId>
-                    <artifactId>build-helper-maven-plugin</artifactId>
-                    <version>1.10</version>
+                    <groupId>org.jacoco</groupId>
+                    <artifactId>jacoco-maven-plugin</artifactId>
+                    <version>0.8.5</version>
                 </plugin>
             </plugins>
         </pluginManagement>

@@ -4,10 +4,7 @@ import com.dummy.myerp.business.impl.AbstractBusinessManager;
 import com.dummy.myerp.business.impl.TransactionManager;
 import com.dummy.myerp.consumer.dao.contrat.ComptabiliteDao;
 import com.dummy.myerp.consumer.dao.contrat.DaoProxy;
-import com.dummy.myerp.model.bean.comptabilite.CompteComptable;
-import com.dummy.myerp.model.bean.comptabilite.EcritureComptable;
-import com.dummy.myerp.model.bean.comptabilite.JournalComptable;
-import com.dummy.myerp.model.bean.comptabilite.LigneEcritureComptable;
+import com.dummy.myerp.model.bean.comptabilite.*;
 import com.dummy.myerp.technical.exception.FunctionalException;
 import org.apache.commons.lang3.ObjectUtils;
 import org.junit.jupiter.api.*;
@@ -15,17 +12,20 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 
 import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
 
+import static com.dummy.myerp.consumer.ConsumerHelper.getDaoProxy;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class ComptabiliteManagerImplTest {
@@ -33,12 +33,19 @@ public class ComptabiliteManagerImplTest {
     ComptabiliteManagerImpl classUnderTest;
     EcritureComptable ecritureComptable;
 
-    @Mock
-    DaoProxy mockDaoProxy;
-    @Mock
-    ComptabiliteDao mockComptabiliteDao;
-    @Mock
-    TransactionManager mockTransactionManager;
+    private static DaoProxy mockDaoProxy = mock(DaoProxy.class, Mockito.RETURNS_DEEP_STUBS);
+    private static TransactionManager mockTransactionManager = mock(TransactionManager.class, RETURNS_DEEP_STUBS);
+
+    @BeforeEach
+    public void init(){
+        classUnderTest = new ComptabiliteManagerImpl();
+        ecritureComptable = new EcritureComptable();
+    }
+
+    @BeforeAll
+    public static void setUp(){
+        AbstractBusinessManager.configure(null, mockDaoProxy, mockTransactionManager);
+    }
 
     private LigneEcritureComptable createLigne(Integer pCompteComptableNumero, String pDebit, String pCredit) {
         BigDecimal vDebit = pDebit == null ? null : new BigDecimal(pDebit);
@@ -48,15 +55,6 @@ public class ComptabiliteManagerImplTest {
         return new LigneEcritureComptable(new CompteComptable(pCompteComptableNumero),
                 vLibelle,
                 vDebit, vCredit);
-    }
-
-    @BeforeEach
-    public void init(){
-        classUnderTest = new ComptabiliteManagerImpl();
-        ecritureComptable = new EcritureComptable();
-        MockitoAnnotations.initMocks(this);
-        when(this.mockDaoProxy.getComptabiliteDao()).thenReturn(this.mockComptabiliteDao);
-        AbstractBusinessManager.configure(null, this.mockDaoProxy, this.mockTransactionManager);
     }
 
     // TODO vérifier les messages renvoyés dans les exceptions
@@ -230,7 +228,7 @@ public class ComptabiliteManagerImplTest {
     @Tag("ContextReference")
     public void givenFirstEcritureComptableOfYear_whenAddReference_thenAddNumber1InReferenceAndSaveNumber1InSequenceEcritureComptable(){
         // GIVEN
-        when(mockComptabiliteDao.getSequenceEcritureComptable("AC",2020)).thenReturn(null);
+        when(mockDaoProxy.getComptabiliteDao().getSequenceEcritureComptableByYear("AC",2020)).thenReturn(null);
         ecritureComptable.setJournal(new JournalComptable("AC", "Achat"));
         ecritureComptable.setDate(new Date());
         ecritureComptable.setLibelle("Libelle");
@@ -246,24 +244,36 @@ public class ComptabiliteManagerImplTest {
 
         // THEN
         assertThat(sequenceNumber).isEqualTo("00001");
-        verify(mockDaoProxy).getComptabiliteDao().saveSequenceEcritureComptable("00001");
+        /*verify(mockDaoProxy.getComptabiliteDao(),times(1))
+                .getSequenceEcritureComptableByYear("AC",2020);*/
+        /*verify(mockDaoProxy.getComptabiliteDao(),times(1))
+                .saveSequenceEcritureComptable(new SequenceEcritureComptable(2020,1));*/
     }
 
     @Test
     @Tag("ContextReference")
-    public void givenXThEcritureComptableOfYear_whenAddReference_thenAddNumberXInReferenceAndSaveNumberXInSequenceEcritureComptable(){
+    public void givenXThEcritureComptableOfYear_whenAddReference_thenAddNumberXPlusOneInReferenceAndSaveNewNumberInSequenceEcritureComptable(){
         // GIVEN
-        when(mockDaoProxy.getComptabiliteDao().getSequenceEcritureComptable("AC",2020)).thenReturn("00015");
-
+        when(mockDaoProxy.getComptabiliteDao().getSequenceEcritureComptableByYear("AC",2020))
+                .thenReturn(new SequenceEcritureComptable(2020,15));
+        ecritureComptable.setJournal(new JournalComptable("AC", "Achat"));
+        ecritureComptable.setDate(new Date());
+        ecritureComptable.setLibelle("Libelle");
+        ecritureComptable.setReference("01-2020/55555");
+        ecritureComptable.getListLigneEcriture().add(this.createLigne(1,"123.00",null));
+        ecritureComptable.getListLigneEcriture().add(this.createLigne(2,null,"123.00"));
 
         // WHEN
         classUnderTest.addReference(ecritureComptable);
         String[] reference = ecritureComptable.getReference().split("[-/]");
-        String sequenceNumber = reference[1];
+        String sequenceNumber = reference[2];
 
         // THEN
         assertThat(sequenceNumber).isEqualTo("00016");
-        verify(mockDaoProxy).getComptabiliteDao().saveSequenceEcritureComptable("00016");
+        /*verify(mockDaoProxy.getComptabiliteDao(),times(1))
+                .getSequenceEcritureComptableByYear("AC",2020);*/
+        /*verify(mockDaoProxy.getComptabiliteDao(),times(1))
+                .updateSequenceEcritureComptable(new SequenceEcritureComptable(2020,16));*/
     }
 
 }

@@ -3,6 +3,7 @@ package com.dummy.myerp.consumer.dao.impl.db.dao;
 import java.sql.Types;
 import java.util.List;
 
+import com.dummy.myerp.model.bean.comptabilite.*;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -14,10 +15,6 @@ import com.dummy.myerp.consumer.dao.impl.db.rowmapper.comptabilite.JournalCompta
 import com.dummy.myerp.consumer.dao.impl.db.rowmapper.comptabilite.LigneEcritureComptableRM;
 import com.dummy.myerp.consumer.db.AbstractDbConsumer;
 import com.dummy.myerp.consumer.db.DataSourcesEnum;
-import com.dummy.myerp.model.bean.comptabilite.CompteComptable;
-import com.dummy.myerp.model.bean.comptabilite.EcritureComptable;
-import com.dummy.myerp.model.bean.comptabilite.JournalComptable;
-import com.dummy.myerp.model.bean.comptabilite.LigneEcritureComptable;
 import com.dummy.myerp.technical.exception.NotFoundException;
 
 
@@ -269,12 +266,17 @@ public class ComptabiliteDaoImpl extends AbstractDbConsumer implements Comptabil
     }
 
     @Override
-    public String getSequenceEcritureComptable(String ac, int i) {
+    public SequenceEcritureComptable getSequenceEcritureComptableByYear(String journalCode, int year) {
         return null;
     }
 
     @Override
-    public void saveSequenceEcritureComptable(String s) {
+    public void saveSequenceEcritureComptable(SequenceEcritureComptable sequenceEcritureComptable) {
+        // TODO
+    }
 
+    @Override
+    public void updateSequenceEcritureComptable(SequenceEcritureComptable sequenceEcritureComptable) {
+        // TODO
     }
 }

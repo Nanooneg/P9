@@ -5,6 +5,7 @@ import java.util.List;
 import com.dummy.myerp.model.bean.comptabilite.CompteComptable;
 import com.dummy.myerp.model.bean.comptabilite.EcritureComptable;
 import com.dummy.myerp.model.bean.comptabilite.JournalComptable;
+import com.dummy.myerp.model.bean.comptabilite.SequenceEcritureComptable;
 import com.dummy.myerp.technical.exception.NotFoundException;
 
 
@@ -83,15 +84,21 @@ public interface ComptabiliteDao {
 
     /**
      * TODO à Implémenter
-     * @param ac
-     * @param i
      * @return
      */
-    String getSequenceEcritureComptable(String ac, int i);
+    SequenceEcritureComptable getSequenceEcritureComptableByYear(String journalCode, int year);
 
     /**
      * TODO à Implémenter
-     * @param s
+     * @param sequenceEcritureComptable
+     * @return
      */
-    void saveSequenceEcritureComptable(String s);
+    void saveSequenceEcritureComptable(SequenceEcritureComptable sequenceEcritureComptable);
+
+    /**
+     * TODO à Implémenter
+     * @param sequenceEcritureComptable
+     * @return
+     */
+    void updateSequenceEcritureComptable(SequenceEcritureComptable sequenceEcritureComptable);
 }

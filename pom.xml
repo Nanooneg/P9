@@ -273,12 +273,12 @@
             </dependency>
 
             <!-- ===== Test unitaires ===== -->
-            <!--<dependency>
+            <dependency>
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
                 <version>4.12</version>
                 <scope>test</scope>
-            </dependency>-->
+            </dependency>
 
             <dependency>
                 <groupId>org.junit.jupiter</groupId>

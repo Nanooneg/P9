@@ -57,7 +57,6 @@ public class ComptabiliteManagerImplTest {
                 vDebit, vCredit);
     }
 
-    // TODO vérifier les messages renvoyés dans les exceptions
 
     @Test
     @Tag("BeanValidation")

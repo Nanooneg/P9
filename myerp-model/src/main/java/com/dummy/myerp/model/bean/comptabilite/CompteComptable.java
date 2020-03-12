@@ -84,7 +84,7 @@ public class CompteComptable {
      *
      * @param pList la liste où chercher le {@link CompteComptable}
      * @param pNumero le numero du {@link CompteComptable} à chercher
-     * @return {@link CompteComptable} ou {@code null}
+     * @return {@link CompteComptable} ou {@code null} TODO peut etre tester ici aussi
      */
     public static CompteComptable getByNumero(List<? extends CompteComptable> pList, Integer pNumero) {
         CompteComptable vRetour = null;

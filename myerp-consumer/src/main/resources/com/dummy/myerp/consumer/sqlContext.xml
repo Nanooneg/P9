@@ -12,22 +12,26 @@
           factory-method="getInstance">
         <property name="SQLgetListCompteComptable">
             <value>
-                SELECT * FROM myerp.compte_comptable
+                SELECT *
+                FROM myerp.compte_comptable
             </value>
         </property>
         <property name="SQLgetListJournalComptable">
             <value>
-                SELECT * FROM myerp.journal_comptable
+                SELECT *
+                FROM myerp.journal_comptable
             </value>
         </property>
         <property name="SQLgetListEcritureComptable">
             <value>
-                SELECT * FROM myerp.ecriture_comptable
+                SELECT *
+                FROM myerp.ecriture_comptable
             </value>
         </property>
         <property name="SQLgetEcritureComptable">
             <value>
-                SELECT * FROM myerp.ecriture_comptable
+                SELECT *
+                FROM myerp.ecriture_comptable
                 WHERE id = :id
             </value>
         </property>
@@ -39,7 +43,8 @@
         </property>
         <property name="SQLloadListLigneEcriture">
             <value>
-                SELECT * FROM myerp.ligne_ecriture_comptable
+                SELECT *
+                FROM myerp.ligne_ecriture_comptable
                 WHERE ecriture_id = :ecriture_id
                 ORDER BY ligne_id
             </value>

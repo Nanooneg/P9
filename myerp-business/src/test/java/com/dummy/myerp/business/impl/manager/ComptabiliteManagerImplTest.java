@@ -283,10 +283,6 @@ public class ComptabiliteManagerImplTest {
 
         // THEN
         assertThat(sequenceNumber).isEqualTo("00001");
-        /*verify(mockDaoProxy.getComptabiliteDao(),times(1))
-                .getSequenceEcritureComptableByYear("AC",2020);*/
-        /*verify(mockDaoProxy.getComptabiliteDao(),times(1))
-                .saveSequenceEcritureComptable(new SequenceEcritureComptable(2020,1));*/
     }
 
     @Test
@@ -309,10 +305,6 @@ public class ComptabiliteManagerImplTest {
 
         // THEN
         assertThat(sequenceNumber).isEqualTo("00016");
-        /*verify(mockDaoProxy.getComptabiliteDao(),times(1))
-                .getSequenceEcritureComptableByYear("AC",2020);*/
-        /*verify(mockDaoProxy.getComptabiliteDao(),times(1))
-                .updateSequenceEcritureComptable(new SequenceEcritureComptable(2020,16));*/
     }
 
 }

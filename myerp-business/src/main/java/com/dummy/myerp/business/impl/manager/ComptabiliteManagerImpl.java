@@ -64,34 +64,8 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
     /**
      * {@inheritDoc}
      */
-    /*@Override
-    public SequenceEcritureComptable getSequenceEcritureComptableByYear(String journalCode, int year) {
-        return getDaoProxy().getComptabiliteDao().getSequenceEcritureComptableByYear(journalCode, year);
-    }*/
-
-    /**
-     * {@inheritDoc}
-     */
-    /*@Override
-    public void saveSequenceEcritureComptable(SequenceEcritureComptable sequenceEcritureComptable) {
-        getDaoProxy().getComptabiliteDao().saveSequenceEcritureComptable(sequenceEcritureComptable);
-    }*/
-
-    /**
-     * {@inheritDoc}
-     */
-    /*@Override
-    public void updateSequenceEcritureComptable(SequenceEcritureComptable sequenceEcritureComptable){
-        getDaoProxy().getComptabiliteDao().updateSequenceEcritureComptable(sequenceEcritureComptable);
-    }*/
-
-    /**
-     * {@inheritDoc}
-     */
-    // TODO à tester
     @Override
     public synchronized void addReference(EcritureComptable pEcritureComptable) {
-        // TODO à implémenter
         String journalCode = pEcritureComptable.getJournal().getCode();
         int currentYear = Calendar.getInstance().get(Calendar.YEAR);
         int newSequence;
@@ -100,7 +74,6 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
         TransactionStatus vTS = getTransactionManager().beginTransactionMyERP();
 
         try {
-            //SequenceEcritureComptable sequenceEcritureComptable = getSequenceEcritureComptableByYear(journalCode, currentYear);
             SequenceEcritureComptable sequenceEcritureComptable = getDaoProxy().getComptabiliteDao()
                     .getSequenceEcritureComptableByYear(journalCode, currentYear);
 
@@ -110,7 +83,6 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
                 pEcritureComptable.setReference(journalCode + "-" + currentYear + "/" + referenceFormat.format(1));
 
                 newSequanceEcritureComptable.setDerniereValeur(1);
-                //saveSequenceEcritureComptable(newSequanceEcritureComptable);
                 getDaoProxy().getComptabiliteDao().saveSequenceEcritureComptable(newSequanceEcritureComptable);
             }else {
                 newSequence = sequenceEcritureComptable.getDerniereValeur() + 1;
@@ -118,7 +90,6 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
                 pEcritureComptable.setReference(journalCode + "-" + currentYear + "/" + referenceFormat.format(newSequence));
 
                 sequenceEcritureComptable.setDerniereValeur(newSequence);
-                //updateSequenceEcritureComptable(sequenceEcritureComptable);
                 getDaoProxy().getComptabiliteDao().updateSequenceEcritureComptable(sequenceEcritureComptable);
             }
 
@@ -147,7 +118,6 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
      * @param pEcritureComptable -
      * @throws FunctionalException Si l'Ecriture comptable ne respecte pas les règles de gestion
      */
-    // TODO DONE tests à compléter
     protected void checkEcritureComptableUnit(EcritureComptable pEcritureComptable) throws FunctionalException {
         // ===== Vérification des contraintes unitaires sur les attributs de l'écriture
         Set<ConstraintViolation<EcritureComptable>> vViolations = getConstraintValidator().validate(pEcritureComptable);
@@ -185,7 +155,7 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
                     "L'écriture comptable doit avoir au moins deux lignes : une ligne au débit et une ligne au crédit.");
         }
 
-        // TODO DONE ===== RG_Compta_5 : Format et contenu de la référence
+        // ===== RG_Compta_5 : Format et contenu de la référence
         String[] reference = pEcritureComptable.getReference().split("[-/]");
         int currentYear = Calendar.getInstance().get(Calendar.YEAR);
         int yearInReference = Integer.parseInt(reference[1]);
@@ -213,8 +183,7 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
                 // Si l'écriture à vérifier est une nouvelle écriture (id == null),
                 // ou si elle ne correspond pas à l'écriture trouvée (id != idECRef),
                 // c'est qu'il y a déjà une autre écriture avec la même référence
-                if (pEcritureComptable.getId() == null
-                        || !pEcritureComptable.getId().equals(vECRef.getId())) {
+                if (!pEcritureComptable.getId().equals(vECRef.getId())) {
                     throw new FunctionalException("Une autre écriture comptable existe déjà avec la même référence.");
                 }
             } catch (NotFoundException vEx) {

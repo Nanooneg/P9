@@ -76,11 +76,19 @@ public class EcritureComptable {
     }
 
     /**
+     * Renvoie si l'écriture est équilibrée (TotalDebit = TotalCrédit)
+     * @return boolean
+     */
+    // TODO error found
+    public boolean isEquilibree() {
+        return this.getTotalDebit().compareTo(this.getTotalCredit()) == 0;
+    }
+
+    /**
      * Calcul et renvoie le total des montants au débit des lignes d'écriture
      *
      * @return {@link BigDecimal}, {@link BigDecimal#ZERO} si aucun montant au débit
      */
-    // TODO DONE à tester
     public BigDecimal getTotalDebit() {
         BigDecimal vRetour = BigDecimal.ZERO;
         for (LigneEcritureComptable vLigneEcritureComptable : listLigneEcriture) {
@@ -104,14 +112,6 @@ public class EcritureComptable {
             }
         }
         return vRetour.stripTrailingZeros();
-    }
-
-    /**
-     * Renvoie si l'écriture est équilibrée (TotalDebit = TotalCrédit)
-     * @return boolean
-     */
-    public boolean isEquilibree() {
-        return this.getTotalDebit().compareTo(this.getTotalCredit()) == 0;
     }
 
     // ==================== Méthodes ====================

@@ -76,7 +76,7 @@ public class JournalComptable {
      *
      * @param pList la liste où chercher le {@link JournalComptable}
      * @param pCode le code du {@link JournalComptable} à chercher
-     * @return {@link JournalComptable} ou {@code null} TODO peut etre tester ici aussi
+     * @return {@link JournalComptable} ou {@code null}
      */
     public static JournalComptable getByCode(List<? extends JournalComptable> pList, String pCode) {
         JournalComptable vRetour = null;

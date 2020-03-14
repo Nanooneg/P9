@@ -6,6 +6,7 @@ import com.dummy.myerp.consumer.dao.contrat.ComptabiliteDao;
 import com.dummy.myerp.consumer.dao.contrat.DaoProxy;
 import com.dummy.myerp.model.bean.comptabilite.*;
 import com.dummy.myerp.technical.exception.FunctionalException;
+import com.dummy.myerp.technical.exception.NotFoundException;
 import org.apache.commons.lang3.ObjectUtils;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -40,6 +41,15 @@ public class ComptabiliteManagerImplTest {
     public void init(){
         classUnderTest = new ComptabiliteManagerImpl();
         ecritureComptable = new EcritureComptable();
+        ecritureComptable.setId(1);  // TODO just do that now go launch !! ^^
+        ecritureComptable.setJournal(new JournalComptable("AC", "Achat"));
+        ecritureComptable.setDate(new Date());
+        ecritureComptable.setLibelle("Libelle");
+        ecritureComptable.setReference("BQ-2020/00001");
+        ecritureComptable.getListLigneEcriture().add(this.createLigne(1, "200.50", null));
+        ecritureComptable.getListLigneEcriture().add(this.createLigne(1, "100.50", "33"));
+        ecritureComptable.getListLigneEcriture().add(this.createLigne(2, null, "301"));
+        ecritureComptable.getListLigneEcriture().add(this.createLigne(2, "40", "7"));
     }
 
     @BeforeAll
@@ -61,13 +71,7 @@ public class ComptabiliteManagerImplTest {
     @Test
     @Tag("BeanValidation")
     public void givenEcritureComptableComplete_whenCheckEcritureComptableUnit_thenAssertDoesNotThrowsFunctionalException() throws FunctionalException {
-        // GIVEN
-        ecritureComptable.setJournal(new JournalComptable("AC", "Achat"));
-        ecritureComptable.setDate(new Date());
-        ecritureComptable.setLibelle("Libelle");
-        ecritureComptable.setReference("01-2020/00001");
-        ecritureComptable.getListLigneEcriture().add(this.createLigne(1,"123.00",null));
-        ecritureComptable.getListLigneEcriture().add(this.createLigne(2,null,"123.00"));
+        // GIVEN already init
 
         // WHEN & THEN
         classUnderTest.checkEcritureComptableUnit(ecritureComptable);
@@ -77,12 +81,7 @@ public class ComptabiliteManagerImplTest {
     @Tag("BeanValidation")
     public void givenEcritureComptableWithoutDate_whenCheckEcritureComptableUnit_thenAssertThrowsFunctionalException() {
         // GIVEN
-        ecritureComptable.setJournal(new JournalComptable("AC", "Achat"));
         ecritureComptable.setDate(null);
-        ecritureComptable.setLibelle("Libelle");
-        ecritureComptable.setReference("01-2020/00001");
-        ecritureComptable.getListLigneEcriture().add(this.createLigne(1,"123.00",null));
-        ecritureComptable.getListLigneEcriture().add(this.createLigne(2,null,"123.00"));
 
         // WHEN
         FunctionalException exception =
@@ -97,11 +96,6 @@ public class ComptabiliteManagerImplTest {
     public void givenEcritureComptableWithoutJournalComptable_whenCheckEcritureComptableUnit_thenAssertThrowsFunctionalException() {
         // GIVEN
         ecritureComptable.setJournal(null);
-        ecritureComptable.setDate(new Date());
-        ecritureComptable.setLibelle("Libelle");
-        ecritureComptable.setReference("01-2020/00001");
-        ecritureComptable.getListLigneEcriture().add(this.createLigne(1,"123.00",null));
-        ecritureComptable.getListLigneEcriture().add(this.createLigne(2,null,"123.00"));
 
         // WHEN
         FunctionalException exception =
@@ -115,12 +109,7 @@ public class ComptabiliteManagerImplTest {
     @Tag("BeanValidation")
     public void givenEcritureComptableWithoutLibelle_whenCheckEcritureComptableUnit_thenAssertThrowsFunctionalException() {
         // GIVEN
-        ecritureComptable.setJournal(new JournalComptable("AC", "Achat"));
-        ecritureComptable.setDate(new Date());
         ecritureComptable.setLibelle(null);
-        ecritureComptable.setReference("01-2020/00001");
-        ecritureComptable.getListLigneEcriture().add(this.createLigne(1,"123.00",null));
-        ecritureComptable.getListLigneEcriture().add(this.createLigne(2,null,"123.00"));
 
         // WHEN
         FunctionalException exception =
@@ -135,12 +124,7 @@ public class ComptabiliteManagerImplTest {
     @Tag("BeanValidation")
     public void givenEcritureComptableWithWrongReferencePattern_whenCheckEcritureComptableUnit_thenAssertThrowsFunctionalException(String arg) {
         // GIVEN
-        ecritureComptable.setJournal(new JournalComptable("AC", "Achat"));
-        ecritureComptable.setDate(new Date());
-        ecritureComptable.setLibelle("Libelle");
         ecritureComptable.setReference(arg);
-        ecritureComptable.getListLigneEcriture().add(this.createLigne(1,"123.00",null));
-        ecritureComptable.getListLigneEcriture().add(this.createLigne(2,null,"123.00"));
 
         // WHEN
         FunctionalException exception =
@@ -154,12 +138,7 @@ public class ComptabiliteManagerImplTest {
     @Tag("BeanValidation")
     public void givenEcritureComptableWithWrongMontantInLigneEcriture_whenCheckEcritureComptableUnit_thenAssertDoesNotThrowsFunctionalException() {
         // GIVEN
-        ecritureComptable.setJournal(new JournalComptable("AC", "Achat"));
-        ecritureComptable.setDate(new Date());
-        ecritureComptable.setLibelle("Libelle");
-        ecritureComptable.setReference("01-2020/00001");
         ecritureComptable.getListLigneEcriture().add(this.createLigne(1,"123.456",null));
-        ecritureComptable.getListLigneEcriture().add(this.createLigne(2,null,"123.00"));
 
         // WHEN
         FunctionalException exception =
@@ -173,12 +152,7 @@ public class ComptabiliteManagerImplTest {
     @Tag("RG2")
     public void givenEcritureComptableNonEquilibree_whenCheckEcritureComptableUnit_thenAssertThrowsFunctionalException(){
         // GIVEN
-        ecritureComptable.setJournal(new JournalComptable("AC", "Achat"));
-        ecritureComptable.setDate(new Date());
-        ecritureComptable.setLibelle("Libelle");
-        ecritureComptable.setReference("01-2020/00001");
-        ecritureComptable.getListLigneEcriture().add(this.createLigne(1,"123.00",null));
-        ecritureComptable.getListLigneEcriture().add(this.createLigne(2,null,"1234.00"));
+        ecritureComptable.getListLigneEcriture().add(this.createLigne(1,"123",null));
 
         // WHEN
         FunctionalException exception =
@@ -192,11 +166,8 @@ public class ComptabiliteManagerImplTest {
     @Tag("RG3")
     public void givenEcritureComptableWithOnlyOneLigneEcriture_whenCheckEcritureComptableUnit_thenAssertThrowsFunctionalException() {
         // GIVEN
-        ecritureComptable.setJournal(new JournalComptable("AC", "Achat"));
-        ecritureComptable.setDate(new Date());
-        ecritureComptable.setLibelle("Libelle");
-        ecritureComptable.setReference("01-2020/00001");
-        ecritureComptable.getListLigneEcriture().add(this.createLigne(1,"123.00",null));
+        ecritureComptable.getListLigneEcriture().clear();
+        ecritureComptable.getListLigneEcriture().add(this.createLigne(1,"123",null));
 
         // WHEN
         FunctionalException exception =
@@ -210,12 +181,9 @@ public class ComptabiliteManagerImplTest {
     @Tag("RG3")
     public void givenEcritureComptableWithTwoLigneEcritureOnlyDebit_whenCheckEcritureComptableUnit_thenAssertThrowsFunctionalException() {
         // GIVEN
-        ecritureComptable.setJournal(new JournalComptable("AC", "Achat"));
-        ecritureComptable.setDate(new Date());
-        ecritureComptable.setLibelle("Libelle");
-        ecritureComptable.setReference("01-2020/00001");
-        ecritureComptable.getListLigneEcriture().add(this.createLigne(1,"123.00",null));
-        ecritureComptable.getListLigneEcriture().add(this.createLigne(2,"123.00",null));
+        ecritureComptable.getListLigneEcriture().clear();
+        ecritureComptable.getListLigneEcriture().add(this.createLigne(1,"123",null));
+        ecritureComptable.getListLigneEcriture().add(this.createLigne(2,"123",null));
 
         // WHEN
         FunctionalException exception =
@@ -229,12 +197,9 @@ public class ComptabiliteManagerImplTest {
     @Tag("RG3")
     public void givenEcritureComptableWithTwoLigneEcritureOnlyCredit_whenCheckEcritureComptableUnit_thenAssertThrowsFunctionalException() {
         // GIVEN
-        ecritureComptable.setJournal(new JournalComptable("AC", "Achat"));
-        ecritureComptable.setDate(new Date());
-        ecritureComptable.setLibelle("Libelle");
-        ecritureComptable.setReference("01-2020/00001");
-        ecritureComptable.getListLigneEcriture().add(this.createLigne(1,null,"123.00"));
-        ecritureComptable.getListLigneEcriture().add(this.createLigne(2,null,"123.00"));
+        ecritureComptable.getListLigneEcriture().clear();
+        ecritureComptable.getListLigneEcriture().add(this.createLigne(1,null,"123"));
+        ecritureComptable.getListLigneEcriture().add(this.createLigne(2,null,"123"));
 
         // WHEN
         FunctionalException exception =
@@ -248,12 +213,7 @@ public class ComptabiliteManagerImplTest {
     @Tag("RG5")
     public void givenEcritureComptableWithLastYearInReference_whenCheckEcritureComptableUnit_thenAssertThrowsFunctionalException() {
         // GIVEN
-        ecritureComptable.setJournal(new JournalComptable("AC", "Achat"));
-        ecritureComptable.setDate(new Date());
-        ecritureComptable.setLibelle("Libelle");
         ecritureComptable.setReference("01-" + (Calendar.getInstance().get(Calendar.YEAR)-1) + "/00001");
-        ecritureComptable.getListLigneEcriture().add(this.createLigne(1,"123.00",null));
-        ecritureComptable.getListLigneEcriture().add(this.createLigne(2,null,"123.00"));
 
         // WHEN
         FunctionalException exception =
@@ -264,17 +224,38 @@ public class ComptabiliteManagerImplTest {
     }
 
     @Test
+    @Tag("RG6")
+    public void givenEcritureComptableWithAlreadyUsedRef_whenCheckEcritureComptableContext_thenAssertThrowsFunctionalException() throws NotFoundException {
+        // GIVEN
+        when(mockDaoProxy.getComptabiliteDao().getEcritureComptableByRef("BQ-2020/00001"))
+                .thenReturn(ecritureComptable);
+
+        // WHEN
+        FunctionalException exception =
+                assertThrows(FunctionalException.class, () -> classUnderTest.checkEcritureComptableContext(ecritureComptable));
+
+        // THEN
+        assertThat(exception.getMessage()).isEqualTo("Une autre écriture comptable existe déjà avec la même référence.");
+    }
+
+    @Test
+    @Tag("RG6")
+    public void givenEcritureComptableWithNewRef_whenCheckEcritureComptableContext_thenAssertNotThrowsFunctionalException() throws NotFoundException, FunctionalException {
+        // GIVEN
+        when(mockDaoProxy.getComptabiliteDao().getEcritureComptableByRef("BQ-2020/00001"))
+                .thenReturn(null);
+
+        // WHEN
+        classUnderTest.checkEcritureComptableContext(ecritureComptable);
+
+        // THEN
+    }
+
+    @Test
     @Tag("ContextReference")
     public void givenFirstEcritureComptableOfYear_whenAddReference_thenAddNumber1InReferenceAndSaveNumber1InSequenceEcritureComptable(){
         // GIVEN
         when(mockDaoProxy.getComptabiliteDao().getSequenceEcritureComptableByYear("AC",2020)).thenReturn(null);
-        ecritureComptable.setJournal(new JournalComptable("AC", "Achat"));
-        ecritureComptable.setDate(new Date());
-        ecritureComptable.setLibelle("Libelle");
-        ecritureComptable.setReference("01-2020/55555");
-        ecritureComptable.getListLigneEcriture().add(this.createLigne(1,"123.00",null));
-        ecritureComptable.getListLigneEcriture().add(this.createLigne(2,null,"123.00"));
-
 
         // WHEN
         classUnderTest.addReference(ecritureComptable);
@@ -291,12 +272,6 @@ public class ComptabiliteManagerImplTest {
         // GIVEN
         when(mockDaoProxy.getComptabiliteDao().getSequenceEcritureComptableByYear("AC",2020))
                 .thenReturn(new SequenceEcritureComptable(2020,15));
-        ecritureComptable.setJournal(new JournalComptable("AC", "Achat"));
-        ecritureComptable.setDate(new Date());
-        ecritureComptable.setLibelle("Libelle");
-        ecritureComptable.setReference("01-2020/55555");
-        ecritureComptable.getListLigneEcriture().add(this.createLigne(1,"123.00",null));
-        ecritureComptable.getListLigneEcriture().add(this.createLigne(2,null,"123.00"));
 
         // WHEN
         classUnderTest.addReference(ecritureComptable);

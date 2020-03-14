@@ -37,7 +37,8 @@
         </property>
         <property name="SQLgetEcritureComptableByRef">
             <value>
-                SELECT * FROM myerp.ecriture_comptable
+                SELECT *
+                FROM myerp.ecriture_comptable
                 WHERE reference = :reference
             </value>
         </property>

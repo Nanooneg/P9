@@ -41,7 +41,7 @@ public class ComptabiliteManagerImplTest {
     public void init(){
         classUnderTest = new ComptabiliteManagerImpl();
         ecritureComptable = new EcritureComptable();
-        ecritureComptable.setId(1);  // TODO just do that now go launch !! ^^
+        ecritureComptable.setId(1);
         ecritureComptable.setJournal(new JournalComptable("AC", "Achat"));
         ecritureComptable.setDate(new Date());
         ecritureComptable.setLibelle("Libelle");

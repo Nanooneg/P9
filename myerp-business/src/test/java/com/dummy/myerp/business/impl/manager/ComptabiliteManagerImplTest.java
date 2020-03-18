@@ -1,31 +1,29 @@
 package com.dummy.myerp.business.impl.manager;
 
+import com.dummy.myerp.business.contrat.BusinessProxy;
 import com.dummy.myerp.business.impl.AbstractBusinessManager;
 import com.dummy.myerp.business.impl.TransactionManager;
-import com.dummy.myerp.consumer.dao.contrat.ComptabiliteDao;
 import com.dummy.myerp.consumer.dao.contrat.DaoProxy;
 import com.dummy.myerp.model.bean.comptabilite.*;
 import com.dummy.myerp.technical.exception.FunctionalException;
 import com.dummy.myerp.technical.exception.NotFoundException;
 import org.apache.commons.lang3.ObjectUtils;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.mockito.junit.jupiter.MockitoSettings;
-import org.mockito.quality.Strictness;
 
 import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
 
-import static com.dummy.myerp.consumer.ConsumerHelper.getDaoProxy;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -34,8 +32,7 @@ public class ComptabiliteManagerImplTest {
     ComptabiliteManagerImpl classUnderTest;
     EcritureComptable ecritureComptable;
 
-    private static DaoProxy mockDaoProxy = mock(DaoProxy.class, Mockito.RETURNS_DEEP_STUBS);
-    private static TransactionManager mockTransactionManager = mock(TransactionManager.class, RETURNS_DEEP_STUBS);
+    private DaoProxy mockDaoProxy;
 
     @BeforeEach
     public void init(){
@@ -52,9 +49,11 @@ public class ComptabiliteManagerImplTest {
         ecritureComptable.getListLigneEcriture().add(this.createLigne(2, "40", "7"));
     }
 
-    @BeforeAll
-    public static void setUp(){
-        AbstractBusinessManager.configure(null, mockDaoProxy, mockTransactionManager);
+    public void initMock(){
+        mockDaoProxy = mock(DaoProxy.class, Mockito.RETURNS_DEEP_STUBS);
+        BusinessProxy mockBusinessProxy = mock(BusinessProxy.class, RETURNS_DEEP_STUBS);
+        TransactionManager mockTransactionManager = mock(TransactionManager.class, RETURNS_DEEP_STUBS);
+        AbstractBusinessManager.configure(mockBusinessProxy, mockDaoProxy, mockTransactionManager);
     }
 
     private LigneEcritureComptable createLigne(Integer pCompteComptableNumero, String pDebit, String pCredit) {
@@ -67,6 +66,65 @@ public class ComptabiliteManagerImplTest {
                 vDebit, vCredit);
     }
 
+    @Test
+    final void getListCompteComptable() {
+        initMock();
+
+        classUnderTest.getListCompteComptable();
+        then(mockDaoProxy).should(times(1)).getComptabiliteDao();
+    }
+
+    @Test
+    void getListJournalComptable() {
+        initMock();
+
+        classUnderTest.getListJournalComptable();
+        then(mockDaoProxy).should(times(1)).getComptabiliteDao();
+    }
+
+    @Test
+    void getListEcritureComptable() {
+        initMock();
+
+        classUnderTest.getListEcritureComptable();
+        then(mockDaoProxy).should(times(1)).getComptabiliteDao();
+    }
+
+    @Test
+    void insertEcritureComptable() throws FunctionalException, NotFoundException {
+        initMock();
+
+        EcritureComptable returnedEcriturecomptable = new EcritureComptable();
+        returnedEcriturecomptable.setReference("BQ-2020/00001");
+        returnedEcriturecomptable.setId(1);
+        when(mockDaoProxy.getComptabiliteDao().getEcritureComptableByRef(anyString()))
+                .thenReturn(returnedEcriturecomptable);
+
+        classUnderTest.insertEcritureComptable(ecritureComptable);
+        then(mockDaoProxy).should(atLeast(1)).getComptabiliteDao();
+    }
+
+    @Test
+    void updateEcritureComptable() throws FunctionalException, NotFoundException {
+        initMock();
+
+        EcritureComptable returnedEcriturecomptable = new EcritureComptable();
+        returnedEcriturecomptable.setReference("BQ-2020/00001");
+        returnedEcriturecomptable.setId(1);
+        when(mockDaoProxy.getComptabiliteDao().getEcritureComptableByRef(anyString()))
+                .thenReturn(returnedEcriturecomptable);
+
+        classUnderTest.updateEcritureComptable(ecritureComptable);
+        then(mockDaoProxy).should(atLeast(1)).getComptabiliteDao();
+    }
+
+    @Test
+    void deleteEcritureComptable() {
+        initMock();
+
+        classUnderTest.deleteEcritureComptable(ecritureComptable.getId());
+        then(mockDaoProxy).should(times(1)).getComptabiliteDao();
+    }
 
     @Test
     @Tag("BeanValidation")
@@ -227,8 +285,13 @@ public class ComptabiliteManagerImplTest {
     @Tag("RG6")
     public void givenEcritureComptableWithAlreadyUsedRef_whenCheckEcritureComptableContext_thenAssertThrowsFunctionalException() throws NotFoundException {
         // GIVEN
+        initMock();
+
+        EcritureComptable returnedEcritureComptable = new EcritureComptable();
+        returnedEcritureComptable.setId(ecritureComptable.getId() + 1); // not the same id !!
+        returnedEcritureComptable.setReference(ecritureComptable.getReference());
         when(mockDaoProxy.getComptabiliteDao().getEcritureComptableByRef("BQ-2020/00001"))
-                .thenReturn(ecritureComptable);
+                .thenReturn(returnedEcritureComptable);
 
         // WHEN
         FunctionalException exception =
@@ -240,21 +303,52 @@ public class ComptabiliteManagerImplTest {
 
     @Test
     @Tag("RG6")
+    public void givenEcritureComptableAlreadyInDB_whenCheckEcritureComptableContext_thenAssertNotThrowsFunctionalException() throws NotFoundException, FunctionalException {
+        // GIVEN
+        initMock();
+
+        EcritureComptable returnedEcriturecomptable = new EcritureComptable();
+        returnedEcriturecomptable.setReference("BQ-2020/00001");
+        returnedEcriturecomptable.setId(1);
+        when(mockDaoProxy.getComptabiliteDao().getEcritureComptableByRef(anyString()))
+                .thenReturn(returnedEcriturecomptable);
+
+        // WHEN & THEN
+        classUnderTest.checkEcritureComptableContext(ecritureComptable);
+    }
+
+    @Test
+    @Tag("RG6")
     public void givenEcritureComptableWithNewRef_whenCheckEcritureComptableContext_thenAssertNotThrowsFunctionalException() throws NotFoundException, FunctionalException {
         // GIVEN
-        when(mockDaoProxy.getComptabiliteDao().getEcritureComptableByRef("BQ-2020/00001"))
-                .thenReturn(null);
+        initMock();
 
-        // WHEN
+        when(mockDaoProxy.getComptabiliteDao().getEcritureComptableByRef(anyString()))
+                .thenThrow(NotFoundException.class); //
+
+        // WHEN & THEN
         classUnderTest.checkEcritureComptableContext(ecritureComptable);
+    }
 
-        // THEN
+    @Test
+    @Tag("All-RG")
+    public void givenGoodEcritureComptable_whenCheckEcritureComptable_thenAssertNotThrowFunctionalException () throws FunctionalException, NotFoundException {
+        // GIVEN
+        initMock();
+
+        when(mockDaoProxy.getComptabiliteDao().getEcritureComptableByRef(anyString()))
+                .thenThrow(NotFoundException.class); //
+
+        // WHEN & THEN
+        classUnderTest.checkEcritureComptable(ecritureComptable);
     }
 
     @Test
     @Tag("ContextReference")
     public void givenFirstEcritureComptableOfYear_whenAddReference_thenAddNumber1InReferenceAndSaveNumber1InSequenceEcritureComptable(){
         // GIVEN
+        initMock();
+
         when(mockDaoProxy.getComptabiliteDao().getSequenceEcritureComptableByYear("AC",2020)).thenReturn(null);
 
         // WHEN
@@ -264,12 +358,15 @@ public class ComptabiliteManagerImplTest {
 
         // THEN
         assertThat(sequenceNumber).isEqualTo("00001");
+        then(mockDaoProxy).should(atLeast(2)).getComptabiliteDao();
     }
 
     @Test
     @Tag("ContextReference")
     public void givenXThEcritureComptableOfYear_whenAddReference_thenAddNumberXPlusOneInReferenceAndSaveNewNumberInSequenceEcritureComptable(){
         // GIVEN
+        initMock();
+
         when(mockDaoProxy.getComptabiliteDao().getSequenceEcritureComptableByYear("AC",2020))
                 .thenReturn(new SequenceEcritureComptable(2020,15));
 
@@ -280,6 +377,6 @@ public class ComptabiliteManagerImplTest {
 
         // THEN
         assertThat(sequenceNumber).isEqualTo("00016");
+        then(mockDaoProxy).should(atLeast(2)).getComptabiliteDao();
     }
-
 }

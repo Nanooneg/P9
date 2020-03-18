@@ -3,6 +3,7 @@ image: maven:latest
 stages:
   - build
   - test
+  - report
 
 build:
   stage: build
@@ -13,3 +14,8 @@ test:
   stage: test
   script:
     - mvn test
+
+report:
+  stage: report
+  script:
+    - mvn clean verify sonar:sonar

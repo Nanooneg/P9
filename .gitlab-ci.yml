@@ -1,5 +1,12 @@
 image: maven:latest
 
+cache:
+  paths:
+    - .m2/repository
+
+variables:
+  MAVEN_OPTS: "-Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository"
+
 stages:
   - build
   - test
@@ -18,4 +25,4 @@ test:
 report:
   stage: report
   script:
-    - mvn clean verify sonar:sonar
+    - mvn verify sonar:sonar

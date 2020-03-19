@@ -29,14 +29,14 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 public class ComptabiliteManagerImplTest {
 
-    ComptabiliteManagerImpl classUnderTest;
+    ComptabiliteManagerImpl comptabiliteManagerUnderTest;
     EcritureComptable ecritureComptable;
 
     private DaoProxy mockDaoProxy;
 
     @BeforeEach
     public void init(){
-        classUnderTest = new ComptabiliteManagerImpl();
+        comptabiliteManagerUnderTest = new ComptabiliteManagerImpl();
         ecritureComptable = new EcritureComptable();
         ecritureComptable.setId(1);
         ecritureComptable.setJournal(new JournalComptable("AC", "Achat"));
@@ -70,7 +70,7 @@ public class ComptabiliteManagerImplTest {
     final void getListCompteComptable() {
         initMock();
 
-        classUnderTest.getListCompteComptable();
+        comptabiliteManagerUnderTest.getListCompteComptable();
         then(mockDaoProxy).should(times(1)).getComptabiliteDao();
     }
 
@@ -78,7 +78,7 @@ public class ComptabiliteManagerImplTest {
     void getListJournalComptable() {
         initMock();
 
-        classUnderTest.getListJournalComptable();
+        comptabiliteManagerUnderTest.getListJournalComptable();
         then(mockDaoProxy).should(times(1)).getComptabiliteDao();
     }
 
@@ -86,7 +86,7 @@ public class ComptabiliteManagerImplTest {
     void getListEcritureComptable() {
         initMock();
 
-        classUnderTest.getListEcritureComptable();
+        comptabiliteManagerUnderTest.getListEcritureComptable();
         then(mockDaoProxy).should(times(1)).getComptabiliteDao();
     }
 
@@ -100,7 +100,7 @@ public class ComptabiliteManagerImplTest {
         when(mockDaoProxy.getComptabiliteDao().getEcritureComptableByRef(anyString()))
                 .thenReturn(returnedEcriturecomptable);
 
-        classUnderTest.insertEcritureComptable(ecritureComptable);
+        comptabiliteManagerUnderTest.insertEcritureComptable(ecritureComptable);
         then(mockDaoProxy).should(atLeast(1)).getComptabiliteDao();
     }
 
@@ -114,7 +114,7 @@ public class ComptabiliteManagerImplTest {
         when(mockDaoProxy.getComptabiliteDao().getEcritureComptableByRef(anyString()))
                 .thenReturn(returnedEcriturecomptable);
 
-        classUnderTest.updateEcritureComptable(ecritureComptable);
+        comptabiliteManagerUnderTest.updateEcritureComptable(ecritureComptable);
         then(mockDaoProxy).should(atLeast(1)).getComptabiliteDao();
     }
 
@@ -122,7 +122,7 @@ public class ComptabiliteManagerImplTest {
     void deleteEcritureComptable() {
         initMock();
 
-        classUnderTest.deleteEcritureComptable(ecritureComptable.getId());
+        comptabiliteManagerUnderTest.deleteEcritureComptable(ecritureComptable.getId());
         then(mockDaoProxy).should(times(1)).getComptabiliteDao();
     }
 
@@ -132,7 +132,7 @@ public class ComptabiliteManagerImplTest {
         // GIVEN already init
 
         // WHEN & THEN
-        classUnderTest.checkEcritureComptableUnit(ecritureComptable);
+        comptabiliteManagerUnderTest.checkEcritureComptableUnit(ecritureComptable);
     }
 
     @Test
@@ -143,7 +143,7 @@ public class ComptabiliteManagerImplTest {
 
         // WHEN
         FunctionalException exception =
-                assertThrows(FunctionalException.class, () -> classUnderTest.checkEcritureComptableUnit(ecritureComptable));
+                assertThrows(FunctionalException.class, () -> comptabiliteManagerUnderTest.checkEcritureComptableUnit(ecritureComptable));
 
         // THEN
         assertThat(exception.getMessage()).isEqualTo("L'écriture comptable ne respecte pas les règles de gestion.");
@@ -157,7 +157,7 @@ public class ComptabiliteManagerImplTest {
 
         // WHEN
         FunctionalException exception =
-                assertThrows(FunctionalException.class, () -> classUnderTest.checkEcritureComptableUnit(ecritureComptable));
+                assertThrows(FunctionalException.class, () -> comptabiliteManagerUnderTest.checkEcritureComptableUnit(ecritureComptable));
 
         // THEN
         assertThat(exception.getMessage()).isEqualTo("L'écriture comptable ne respecte pas les règles de gestion.");
@@ -171,7 +171,7 @@ public class ComptabiliteManagerImplTest {
 
         // WHEN
         FunctionalException exception =
-                assertThrows(FunctionalException.class, () -> classUnderTest.checkEcritureComptableUnit(ecritureComptable));
+                assertThrows(FunctionalException.class, () -> comptabiliteManagerUnderTest.checkEcritureComptableUnit(ecritureComptable));
 
         // THEN
         assertThat(exception.getMessage()).isEqualTo("L'écriture comptable ne respecte pas les règles de gestion.");
@@ -186,7 +186,7 @@ public class ComptabiliteManagerImplTest {
 
         // WHEN
         FunctionalException exception =
-                assertThrows(FunctionalException.class, () -> classUnderTest.checkEcritureComptableUnit(ecritureComptable));
+                assertThrows(FunctionalException.class, () -> comptabiliteManagerUnderTest.checkEcritureComptableUnit(ecritureComptable));
 
         // THEN
         assertThat(exception.getMessage()).isEqualTo("L'écriture comptable ne respecte pas les règles de gestion.");
@@ -200,7 +200,7 @@ public class ComptabiliteManagerImplTest {
 
         // WHEN
         FunctionalException exception =
-                assertThrows(FunctionalException.class, () -> classUnderTest.checkEcritureComptableUnit(ecritureComptable));
+                assertThrows(FunctionalException.class, () -> comptabiliteManagerUnderTest.checkEcritureComptableUnit(ecritureComptable));
 
         // THEN
         assertThat(exception.getMessage()).isEqualTo("L'écriture comptable ne respecte pas les règles de gestion.");
@@ -214,7 +214,7 @@ public class ComptabiliteManagerImplTest {
 
         // WHEN
         FunctionalException exception =
-                assertThrows(FunctionalException.class, () -> classUnderTest.checkEcritureComptableUnit(ecritureComptable));
+                assertThrows(FunctionalException.class, () -> comptabiliteManagerUnderTest.checkEcritureComptableUnit(ecritureComptable));
 
         // THEN
         assertThat(exception.getMessage()).isEqualTo("L'écriture comptable n'est pas équilibrée.");
@@ -229,7 +229,7 @@ public class ComptabiliteManagerImplTest {
 
         // WHEN
         FunctionalException exception =
-                assertThrows(FunctionalException.class, () -> classUnderTest.checkEcritureComptableUnit(ecritureComptable));
+                assertThrows(FunctionalException.class, () -> comptabiliteManagerUnderTest.checkEcritureComptableUnit(ecritureComptable));
 
         // THEN
         assertThat(exception.getMessage()).isEqualTo("L'écriture comptable ne respecte pas les règles de gestion.");
@@ -245,7 +245,7 @@ public class ComptabiliteManagerImplTest {
 
         // WHEN
         FunctionalException exception =
-                assertThrows(FunctionalException.class, () -> classUnderTest.checkEcritureComptableUnit(ecritureComptable));
+                assertThrows(FunctionalException.class, () -> comptabiliteManagerUnderTest.checkEcritureComptableUnit(ecritureComptable));
 
         // THEN
         assertThat(exception.getMessage()).isEqualTo("L'écriture comptable n'est pas équilibrée.");
@@ -261,7 +261,7 @@ public class ComptabiliteManagerImplTest {
 
         // WHEN
         FunctionalException exception =
-                assertThrows(FunctionalException.class, () -> classUnderTest.checkEcritureComptableUnit(ecritureComptable));
+                assertThrows(FunctionalException.class, () -> comptabiliteManagerUnderTest.checkEcritureComptableUnit(ecritureComptable));
 
         // THEN
         assertThat(exception.getMessage()).isEqualTo("L'écriture comptable n'est pas équilibrée.");
@@ -275,7 +275,7 @@ public class ComptabiliteManagerImplTest {
 
         // WHEN
         FunctionalException exception =
-                assertThrows(FunctionalException.class, () -> classUnderTest.checkEcritureComptableUnit(ecritureComptable));
+                assertThrows(FunctionalException.class, () -> comptabiliteManagerUnderTest.checkEcritureComptableUnit(ecritureComptable));
 
         // THEN
         assertThat(exception.getMessage()).isEqualTo("La référence de l'écriture comptable doit contenir l'année courante.");
@@ -295,7 +295,7 @@ public class ComptabiliteManagerImplTest {
 
         // WHEN
         FunctionalException exception =
-                assertThrows(FunctionalException.class, () -> classUnderTest.checkEcritureComptableContext(ecritureComptable));
+                assertThrows(FunctionalException.class, () -> comptabiliteManagerUnderTest.checkEcritureComptableContext(ecritureComptable));
 
         // THEN
         assertThat(exception.getMessage()).isEqualTo("Une autre écriture comptable existe déjà avec la même référence.");
@@ -314,7 +314,7 @@ public class ComptabiliteManagerImplTest {
                 .thenReturn(returnedEcriturecomptable);
 
         // WHEN & THEN
-        classUnderTest.checkEcritureComptableContext(ecritureComptable);
+        comptabiliteManagerUnderTest.checkEcritureComptableContext(ecritureComptable);
     }
 
     @Test
@@ -327,7 +327,7 @@ public class ComptabiliteManagerImplTest {
                 .thenThrow(NotFoundException.class); //
 
         // WHEN & THEN
-        classUnderTest.checkEcritureComptableContext(ecritureComptable);
+        comptabiliteManagerUnderTest.checkEcritureComptableContext(ecritureComptable);
     }
 
     @Test
@@ -340,7 +340,7 @@ public class ComptabiliteManagerImplTest {
                 .thenThrow(NotFoundException.class); //
 
         // WHEN & THEN
-        classUnderTest.checkEcritureComptable(ecritureComptable);
+        comptabiliteManagerUnderTest.checkEcritureComptable(ecritureComptable);
     }
 
     @Test
@@ -352,7 +352,7 @@ public class ComptabiliteManagerImplTest {
         when(mockDaoProxy.getComptabiliteDao().getSequenceEcritureComptableByYear("AC",2020)).thenReturn(null);
 
         // WHEN
-        classUnderTest.addReference(ecritureComptable);
+        comptabiliteManagerUnderTest.addReference(ecritureComptable);
         String[] reference = ecritureComptable.getReference().split("[-/]");
         String sequenceNumber = reference[2];
 
@@ -371,7 +371,7 @@ public class ComptabiliteManagerImplTest {
                 .thenReturn(new SequenceEcritureComptable(2020,15));
 
         // WHEN
-        classUnderTest.addReference(ecritureComptable);
+        comptabiliteManagerUnderTest.addReference(ecritureComptable);
         String[] reference = ecritureComptable.getReference().split("[-/]");
         String sequenceNumber = reference[2];
 

@@ -61,6 +61,7 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
         return getDaoProxy().getComptabiliteDao().getListEcritureComptable();
     }
 
+
     /**
      * {@inheritDoc}
      */

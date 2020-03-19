@@ -20,7 +20,7 @@ public abstract class AbstractBusinessManager {
     /** Le Proxy d'accès à la couche Business */
     private static BusinessProxy businessProxy;
     /** Le Proxy d'accès à la couche Consumer-DAO */
-    private static DaoProxy daoProxy;
+    private static DaoProxy     daoProxy;
     /** Le gestionnaire de Transaction */
     private static TransactionManager transactionManager;
 

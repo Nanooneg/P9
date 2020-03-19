@@ -55,9 +55,11 @@
         <spring.version>4.3.18.RELEASE</spring.version>
 
         <!-- ===== Sonar properties ===== -->
-        <sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/../target/site/jacoco-aggregate/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
+        <sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/../target/site/../jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
         <sonar.projectKey>Nanooneg_P9</sonar.projectKey>
         <sonar.moduleKey>${artifactId}</sonar.moduleKey>
+        <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
+        <sonar.language>java</sonar.language>
         <sonar.organization>nanooneg</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
         <sonar.login>9f797e3d820cc39aa45f8d55eb85d1ff63eebff1</sonar.login>

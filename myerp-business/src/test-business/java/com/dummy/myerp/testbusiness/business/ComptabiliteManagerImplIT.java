@@ -5,17 +5,19 @@ import com.dummy.myerp.model.bean.comptabilite.CompteComptable;
 import com.dummy.myerp.model.bean.comptabilite.EcritureComptable;
 import com.dummy.myerp.model.bean.comptabilite.JournalComptable;
 import jdk.nashorn.internal.ir.annotations.Ignore;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Ignore
+
 public class ComptabiliteManagerImplIT {
 
     private final ComptabiliteManagerImpl comptabiliteManagerUnderTest = new ComptabiliteManagerImpl();
 
+    @Disabled
     @Test
     final void getListCompteComptable() {
         // GIVEN
@@ -28,6 +30,7 @@ public class ComptabiliteManagerImplIT {
         assertThat(compteComptableList).isNot(null);
     }
 
+    @Disabled
     @Test
     void getListJournalComptable() {
         // GIVEN
@@ -40,6 +43,7 @@ public class ComptabiliteManagerImplIT {
         assertThat(journalComptableList).isNot(null);
     }
 
+    @Disabled
     @Test
     void getListEcritureComptable() {
         // GIVEN

@@ -56,7 +56,8 @@
         <spring.version>4.3.18.RELEASE</spring.version>
 
         <!-- ===== Sonar properties ===== -->
-        <sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/${relative.path.to.parent}/target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
+<!--        <sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/${relative.path.to.parent}/target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>-->
+        <sonar.jacoco.reportPath>${project.basedir}/${relative.path.to.parent}/target/site/jacoco/jacoco.xml</sonar.jacoco.reportPath>
         <sonar.projectKey>Nanooneg_P9</sonar.projectKey>
         <sonar.moduleKey>${artifactId}</sonar.moduleKey>
         <sonar.sources>src/main</sonar.sources>
@@ -66,10 +67,10 @@
         <sonar.binaries>${project.basedir}/classes</sonar.binaries>
         <!-- Sonar cloud properties -->
         <sonar.organization>nanooneg</sonar.organization>
-<!--        <sonar.host.url>https://sonarcloud.io</sonar.host.url>-->
-<!--        <sonar.login>9f797e3d820cc39aa45f8d55eb85d1ff63eebff1</sonar.login>-->
-        <sonar.host.url>http://localhost:9000</sonar.host.url>
-        <sonar.login>jenkins</sonar.login>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+        <sonar.login>9f797e3d820cc39aa45f8d55eb85d1ff63eebff1</sonar.login>
+<!--        <sonar.host.url>http://localhost:9000</sonar.host.url>-->
+<!--        <sonar.login>cb155c5e8f5ec554692b9ad11655708032da5b85</sonar.login>-->
         <!-- Below property indicates the pattern of the test suite -->
         <runSuite>**/*Suite.class</runSuite>
     </properties>

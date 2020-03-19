@@ -17,13 +17,26 @@ build:
   stage: build
   script:
     - mvn $MAVEN_CLI_OPTS compile
+  artifacts:
+    paths:
+      - target/
 
 test:
   stage: test
+  dependencies:
+    - build
   script:
     - mvn $MAVEN_CLI_OPTS test
+  artifacts:
+    paths:
+      - target/
 
 report:
   stage: report
+  dependencies:
+    - build
   script:
     - mvn $MAVEN_CLI_OPTS verify sonar:sonar
+  artifacts:
+    paths:
+      - target/

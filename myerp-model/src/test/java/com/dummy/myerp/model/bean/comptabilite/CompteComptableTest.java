@@ -16,7 +16,7 @@ class CompteComptableTest {
     List<CompteComptable> compteComptableList = new ArrayList<>();
 
     @BeforeEach
-    public void init() {
+    public void setUp() {
         // create 5 comptes comptables for tests
         for (int i = 0; i < 5; i++){
             compteComptableUnderTest = new CompteComptable();
@@ -48,5 +48,16 @@ class CompteComptableTest {
 
         // THEN
         assertThat(result).isEqualTo(null);
+    }
+
+    @Test
+    void shouldReturnStringValueOfCompteComptable_whenToString (){
+        // GIVEN already initialize
+
+        // WHEN
+        String result = compteComptableList.get(0).toString();
+
+        // THEN
+        assertThat(result).isEqualTo("CompteComptable{numero=1, libelle='QQ'}");
     }
 }

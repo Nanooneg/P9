@@ -19,7 +19,7 @@ class JournalComptableTest {
         for (int i = 0; i < 5; i++){
             journalComptableUnderTest = new JournalComptable();
             journalComptableUnderTest.setLibelle("QQ");
-            journalComptableUnderTest.setCode("A" + i);
+            journalComptableUnderTest.setCode("A" + (i+1));
             journalComptableList.add(journalComptableUnderTest);
         }
     }
@@ -46,6 +46,17 @@ class JournalComptableTest {
 
         // THEN
         assertThat(result).isEqualTo(null);
+    }
+
+    @Test
+    void shouldReturnStringValueOfJournalComptable_whenToString (){
+        // GIVEN already initialize
+
+        // WHEN
+        String result = journalComptableList.get(0).toString();
+
+        // THEN
+        assertThat(result).isEqualTo("JournalComptable{code='A1', libelle='QQ'}");
     }
 }
 

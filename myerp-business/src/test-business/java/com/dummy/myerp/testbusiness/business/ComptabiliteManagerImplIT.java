@@ -4,20 +4,21 @@ import com.dummy.myerp.business.impl.manager.ComptabiliteManagerImpl;
 import com.dummy.myerp.model.bean.comptabilite.CompteComptable;
 import com.dummy.myerp.model.bean.comptabilite.EcritureComptable;
 import com.dummy.myerp.model.bean.comptabilite.JournalComptable;
-import jdk.nashorn.internal.ir.annotations.Ignore;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-
+@ExtendWith(SpringExtension.class)
+@ContextConfiguration(locations = "/com/dummy/myerp/business/applicationContext.xml")
 public class ComptabiliteManagerImplIT {
 
     private final ComptabiliteManagerImpl comptabiliteManagerUnderTest = new ComptabiliteManagerImpl();
 
-    @Disabled
     @Test
     final void getListCompteComptable() {
         // GIVEN
@@ -27,10 +28,9 @@ public class ComptabiliteManagerImplIT {
         compteComptableList = comptabiliteManagerUnderTest.getListCompteComptable();
 
         // THEN
-        assertThat(compteComptableList).isNot(null);
+        assertThat(compteComptableList.size()).isEqualTo(7);
     }
 
-    @Disabled
     @Test
     void getListJournalComptable() {
         // GIVEN
@@ -40,10 +40,9 @@ public class ComptabiliteManagerImplIT {
         journalComptableList = comptabiliteManagerUnderTest.getListJournalComptable();
 
         // THEN
-        assertThat(journalComptableList).isNot(null);
+        assertThat(journalComptableList.size()).isEqualTo(4);
     }
 
-    @Disabled
     @Test
     void getListEcritureComptable() {
         // GIVEN
@@ -53,7 +52,9 @@ public class ComptabiliteManagerImplIT {
         ecritureComptableList = comptabiliteManagerUnderTest.getListEcritureComptable();
 
         // THEN
-        assertThat(ecritureComptableList).isNot(null);
+        assertThat(ecritureComptableList.size()).isEqualTo(5);
     }
+
+
 
 }

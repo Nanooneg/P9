@@ -80,5 +80,32 @@ public class EcritureComptableTest {
         assertThat(resultTest).isEqualTo(false);
     }
 
+    @Test
+    void shouldReturnStringValueOfEcritureComptable_whenToString (){
+        // GIVEN
+        ecritureComptableUnderTest.getListLigneEcriture().clear();
+        ecritureComptableUnderTest.getListLigneEcriture().add(this.createLigne(1, "200.50", null));
+
+        // WHEN
+        String result = ecritureComptableUnderTest.toString();
+
+        // THEN
+        assertThat(result)
+                .isEqualTo("EcritureComptable{id=null, " +
+                        "journal=null, " +
+                        "reference='null', " +
+                        "date=null, " +
+                        "libelle='Equilibrée', " +
+                        "totalDebit=200.5, " +
+                        "totalCredit=0, " +
+                        "listLigneEcriture=[\n" +
+                            "LigneEcritureComptable{compteComptable=CompteComptable{numero=1, libelle='null'}, " +
+                            "libelle='200.50', " +
+                            "debit=200.50, " +
+                            "credit=null}" +
+                        "\n]" +
+                        "}");
+    }
+
 
 }

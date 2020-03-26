@@ -37,29 +37,6 @@ public interface ComptabiliteManager {
      */
     List<EcritureComptable> getListEcritureComptable();
 
-    /**
-     * Renvoi la sequence d'une écriture comptable pour le journal et l'année données
-     *
-     * @param journalCode code du journal
-     * @param year année demandée
-     * @return une séquence d'écriture comptable
-     */
-    //SequenceEcritureComptable getSequenceEcritureComptableByYear(String journalCode, int year);
-
-    /**
-     * TODO
-     *
-     * @param sequenceEcritureComptable
-     */
-    //void saveSequenceEcritureComptable (SequenceEcritureComptable sequenceEcritureComptable);
-
-    /**
-     * TODO
-     *
-     * @param sequenceEcritureComptable
-     */
-    //void updateSequenceEcritureComptable (SequenceEcritureComptable sequenceEcritureComptable);
-
 
     /**
      * Ajoute une référence à l'écriture comptable.

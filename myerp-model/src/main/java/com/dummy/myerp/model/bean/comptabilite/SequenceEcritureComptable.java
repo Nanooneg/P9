@@ -12,6 +12,8 @@ public class SequenceEcritureComptable {
     /** La dernière valeur utilisée */
     private Integer derniereValeur;
 
+    // TODO erreur ? journal code bidirection ?
+
     // ==================== Constructeurs ====================
     /**
      * Constructeur

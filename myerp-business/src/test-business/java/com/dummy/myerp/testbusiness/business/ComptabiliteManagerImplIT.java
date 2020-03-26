@@ -6,6 +6,7 @@ import com.dummy.myerp.model.bean.comptabilite.EcritureComptable;
 import com.dummy.myerp.model.bean.comptabilite.JournalComptable;
 import com.dummy.myerp.model.bean.comptabilite.LigneEcritureComptable;
 import com.dummy.myerp.technical.exception.FunctionalException;
+import com.dummy.myerp.technical.exception.NotFoundException;
 import org.apache.commons.lang3.ObjectUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -33,8 +34,7 @@ public class ComptabiliteManagerImplIT {
     public void init(){
         comptabiliteManagerUnderTest = new ComptabiliteManagerImpl();
         ecritureComptable = new EcritureComptable();
-        //ecritureComptable.setId(1);
-        ecritureComptable.setJournal(new JournalComptable("AC", "Achat"));
+        ecritureComptable.setJournal(new JournalComptable("BQ", "Banque"));
         ecritureComptable.setDate(new Date());
         ecritureComptable.setLibelle("Libelle");
         ecritureComptable.setReference("BQ-2020/00001");
@@ -131,5 +131,34 @@ public class ComptabiliteManagerImplIT {
         assertThat(deletedEcritureComptable).isEqualTo(null);
 
     }
+
+    @Test
+    public void addReferenceFirstEcritureComptableOfTheYear() throws NotFoundException {
+        // GIVEN
+        ecritureComptable.setReference(null);
+
+
+        // WHEN
+        comptabiliteManagerUnderTest.addReference(ecritureComptable);
+
+        // THEN
+        assertThat(ecritureComptable.getReference()).isEqualTo("BQ-2020/00001");
+    }
+
+    @Test
+    public void addReferenceNotFirstEcritureComptableOfTheYear() throws NotFoundException {
+        // GIVEN
+        ecritureComptable.setReference(null);
+        ecritureComptable.setJournal(new JournalComptable("AC", "Achat"));
+
+
+        // WHEN
+        comptabiliteManagerUnderTest.addReference(ecritureComptable);
+
+        // THEN
+        assertThat(ecritureComptable.getReference()).isEqualTo("AC-2020/00041");
+    }
+
+    // TODO test new sequenceEcritureComptable is well insert in DB after implement that feature obv !!!
 
 }

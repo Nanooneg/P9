@@ -51,23 +51,23 @@
 								
 								
 --- ================================================================================								
---- sequence_ecriture_comptable								
+--- sequence_ecriture_comptable	 TODO change year to match text context
 --- ================================================================================								
 --		sequence_ecriture_comptable						
 --		journal_code	annee	derniere_valeur				
---		AC	2016	40				
---		VE	2016	41				
---		BQ	2016	51				
---		OD	2016	88				
+--		AC	2020	40
+--		VE	2020	41
+--		BQ	2019	51
+--		OD	2020	88
 --								
 --	sequence_ecriture_comptable							
 --								
 --		journal_code	annee	derniere_valeur				
 --		VARCHAR	INTEGER	INTEGER				
-	INSERT INTO MYERP.sequence_ecriture_comptable (journal_code, annee, derniere_valeur) values (	'AC',	2016,	40	);			
-	INSERT INTO MYERP.sequence_ecriture_comptable (journal_code, annee, derniere_valeur) values (	'VE',	2016,	41	);			
-	INSERT INTO MYERP.sequence_ecriture_comptable (journal_code, annee, derniere_valeur) values (	'BQ',	2016,	51	);			
-	INSERT INTO MYERP.sequence_ecriture_comptable (journal_code, annee, derniere_valeur) values (	'OD',	2016,	88	);			
+	INSERT INTO MYERP.sequence_ecriture_comptable (journal_code, annee, derniere_valeur) values (	'AC',	2020,	40	);
+	INSERT INTO MYERP.sequence_ecriture_comptable (journal_code, annee, derniere_valeur) values (	'VE',	2020,	41	);
+	INSERT INTO MYERP.sequence_ecriture_comptable (journal_code, annee, derniere_valeur) values (	'BQ',	2019,	51	);
+	INSERT INTO MYERP.sequence_ecriture_comptable (journal_code, annee, derniere_valeur) values (	'OD',	2020,	88	);
 								
 								
 								

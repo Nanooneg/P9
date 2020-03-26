@@ -345,11 +345,11 @@ public class ComptabiliteManagerImplTest {
 
     @Test
     @Tag("ContextReference")
-    public void givenFirstEcritureComptableOfYear_whenAddReference_thenAddNumber1InReferenceAndSaveNumber1InSequenceEcritureComptable(){
+    public void givenFirstEcritureComptableOfYear_whenAddReference_thenAddNumber1InReferenceAndSaveNumber1InSequenceEcritureComptable() throws NotFoundException {
         // GIVEN
         initMock();
 
-        when(mockDaoProxy.getComptabiliteDao().getSequenceEcritureComptableByYear("AC",2020)).thenReturn(null);
+        when(mockDaoProxy.getComptabiliteDao().getSequenceEcritureComptable("AC",2020)).thenReturn(null);
 
         // WHEN
         comptabiliteManagerUnderTest.addReference(ecritureComptable);
@@ -363,11 +363,11 @@ public class ComptabiliteManagerImplTest {
 
     @Test
     @Tag("ContextReference")
-    public void givenXThEcritureComptableOfYear_whenAddReference_thenAddNumberXPlusOneInReferenceAndSaveNewNumberInSequenceEcritureComptable(){
+    public void givenXThEcritureComptableOfYear_whenAddReference_thenAddNumberXPlusOneInReferenceAndSaveNewNumberInSequenceEcritureComptable() throws NotFoundException {
         // GIVEN
         initMock();
 
-        when(mockDaoProxy.getComptabiliteDao().getSequenceEcritureComptableByYear("AC",2020))
+        when(mockDaoProxy.getComptabiliteDao().getSequenceEcritureComptable("AC",2020))
                 .thenReturn(new SequenceEcritureComptable(2020,15));
 
         // WHEN

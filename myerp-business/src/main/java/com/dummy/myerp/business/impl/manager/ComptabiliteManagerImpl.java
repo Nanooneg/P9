@@ -2,8 +2,6 @@ package com.dummy.myerp.business.impl.manager;
 
 import com.dummy.myerp.business.contrat.manager.ComptabiliteManager;
 import com.dummy.myerp.business.impl.AbstractBusinessManager;
-import com.dummy.myerp.consumer.dao.contrat.ComptabiliteDao;
-import com.dummy.myerp.consumer.dao.contrat.DaoProxy;
 import com.dummy.myerp.model.bean.comptabilite.*;
 import com.dummy.myerp.technical.exception.FunctionalException;
 import com.dummy.myerp.technical.exception.NotFoundException;
@@ -68,30 +66,28 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
      * {@inheritDoc}
      */
     @Override
-    public synchronized void addReference(EcritureComptable pEcritureComptable) {
+    public synchronized void addReference(EcritureComptable pEcritureComptable) throws NotFoundException {
         String journalCode = pEcritureComptable.getJournal().getCode();
         int currentYear = Calendar.getInstance().get(Calendar.YEAR);
         int newSequence;
         SequenceEcritureComptable newSequanceEcritureComptable = new SequenceEcritureComptable();
+        SequenceEcritureComptable sequenceEcritureComptable = null;
         DecimalFormat referenceFormat = new DecimalFormat("00000");
         TransactionStatus vTS = getTransactionManager().beginTransactionMyERP();
 
         try {
-            SequenceEcritureComptable sequenceEcritureComptable = getDaoProxy().getComptabiliteDao()
-                    .getSequenceEcritureComptableByYear(journalCode, currentYear);
-
-            if (sequenceEcritureComptable == null) {
+            try {
+                sequenceEcritureComptable = getDaoProxy().getComptabiliteDao().getSequenceEcritureComptable(journalCode, currentYear);
+            }catch (NotFoundException e){
                 newSequanceEcritureComptable.setAnnee(currentYear);
-
                 pEcritureComptable.setReference(journalCode + "-" + currentYear + "/" + referenceFormat.format(1));
-
                 newSequanceEcritureComptable.setDerniereValeur(1);
                 getDaoProxy().getComptabiliteDao().saveSequenceEcritureComptable(newSequanceEcritureComptable);
-            }else {
+            }
+
+            if (sequenceEcritureComptable != null) {
                 newSequence = sequenceEcritureComptable.getDerniereValeur() + 1;
-
                 pEcritureComptable.setReference(journalCode + "-" + currentYear + "/" + referenceFormat.format(newSequence));
-
                 sequenceEcritureComptable.setDerniereValeur(newSequence);
                 getDaoProxy().getComptabiliteDao().updateSequenceEcritureComptable(sequenceEcritureComptable);
             }

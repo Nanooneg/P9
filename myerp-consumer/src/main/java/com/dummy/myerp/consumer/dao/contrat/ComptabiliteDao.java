@@ -86,7 +86,7 @@ public interface ComptabiliteDao {
      * TODO à Implémenter
      * @return
      */
-    SequenceEcritureComptable getSequenceEcritureComptableByYear(String journalCode, int year);
+    SequenceEcritureComptable getSequenceEcritureComptable(String journalCode, int year) throws NotFoundException;
 
     /**
      * TODO à Implémenter

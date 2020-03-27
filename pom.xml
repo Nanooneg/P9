@@ -407,10 +407,12 @@
                 </plugin>
 
                 <!-- ===== Test / Reporting ===== -->
+
+                <!-- ===== Test / Reporting (Unit Test) ===== -->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
-                    <version>2.22.0</version>
+                    <version>2.22.2</version>
                     <dependencies>
                         <dependency>
                             <groupId>org.junit.platform</groupId>
@@ -423,6 +425,34 @@
                             <version>5.6.0</version>
                         </dependency>
                     </dependencies>
+                </plugin>
+
+                <!-- ===== Test / Reporting (Integration Test) ===== -->
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-failsafe-plugin</artifactId>
+                    <version>2.22.2</version>
+                    <dependencies>
+                        <dependency>
+                            <groupId>org.junit.platform</groupId>
+                            <artifactId>junit-platform-surefire-provider</artifactId>
+                            <version>1.2.0</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.junit.jupiter</groupId>
+                            <artifactId>junit-jupiter-engine</artifactId>
+                            <version>5.6.0</version>
+                        </dependency>
+                    </dependencies>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>integration-test</goal>
+                                <goal>verify</goal>
+                            </goals>
+                        </execution>
+                    </executions>
                 </plugin>
 
                 <!-- ===== Plugin d'analyse de code Checkstyle ===== -->
@@ -459,6 +489,14 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-javadoc-plugin</artifactId>
                     <version>2.10.4</version>
+                </plugin>
+
+                <!-- ===== Aide au constructions particulières ===== -->
+                <!-- Ex : Ajout de répertoire de sources générées en tant que source d'un module -->
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>build-helper-maven-plugin</artifactId>
+                    <version>3.0.0</version>
                 </plugin>
 
                 <!-- ===== Couverture de code avec Jacoco ===== -->

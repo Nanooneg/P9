@@ -54,8 +54,8 @@
             <value>
                 SELECT *
                 FROM myerp.sequence_ecriture_comptable
-                WHERE journal_code = :journalCode
-                AND annee = :currentYear
+                WHERE journal_code = :journal_code
+                AND annee = :annee
             </value>
         </property>
         <property name="SQLinsertEcritureComptable">
@@ -68,6 +68,15 @@
                     :journal_code, :reference, :date, :libelle
                 )
             </value>
+        </property>
+        <property name="SQLinsertSequenceEcritureComptable">
+            <value>
+                INSERT INTO myerp.sequence_ecriture_comptable (
+                    journal_code, annee, derniere_valeur
+                ) VALUES (
+                    :journal_code, :annee, :derniere_valeur
+                )
+            </value> <!-- TODO need journal code ? -->
         </property>
         <property name="SQLinsertListLigneEcritureComptable">
             <value>
@@ -89,6 +98,14 @@
                     libelle = :libelle
                 WHERE
                     id = :id
+            </value>
+        </property>
+        <property name="SQLupdateSequenceEcritureComptable">
+            <value>
+                UPDATE myerp.sequence_ecriture_comptable
+                SET derniere_valeur = :derniere_valeur
+                WHERE annee = :annee
+                AND journal_code = :journal_code
             </value>
         </property>
         <property name="SQLdeleteEcritureComptable">

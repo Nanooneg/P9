@@ -4,7 +4,7 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
                            http://www.springframework.org/schema/beans/spring-beans-4.3.xsd">
 
-    <!-- =======   Link to applicationContext.xml, as defined in consumer and model modules  ====== -->
+    <!-- =======   Link to test.xml, as defined in consumer and model modules  ====== -->
     <import resource="classpath:com/dummy/myerp/business/applicationContext.xml"/>
     <import resource="classpath:com/dummy/myerp/consumer/applicationContext.xml"/>
     <import resource="classpath:com/dummy/myerp/model/applicationContext.xml"/>

@@ -82,14 +82,14 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
                 newSequanceEcritureComptable.setAnnee(currentYear);
                 pEcritureComptable.setReference(journalCode + "-" + currentYear + "/" + referenceFormat.format(1));
                 newSequanceEcritureComptable.setDerniereValeur(1);
-                getDaoProxy().getComptabiliteDao().saveSequenceEcritureComptable(newSequanceEcritureComptable);
+                getDaoProxy().getComptabiliteDao().insertSequenceEcritureComptable(newSequanceEcritureComptable, journalCode);
             }
 
             if (sequenceEcritureComptable != null) {
                 newSequence = sequenceEcritureComptable.getDerniereValeur() + 1;
                 pEcritureComptable.setReference(journalCode + "-" + currentYear + "/" + referenceFormat.format(newSequence));
                 sequenceEcritureComptable.setDerniereValeur(newSequence);
-                getDaoProxy().getComptabiliteDao().updateSequenceEcritureComptable(sequenceEcritureComptable);
+                getDaoProxy().getComptabiliteDao().updateSequenceEcritureComptable(sequenceEcritureComptable, journalCode);
             }
 
             getTransactionManager().commitMyERP(vTS);

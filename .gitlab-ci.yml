@@ -1,22 +1,15 @@
 image: maven:latest
 
-variables:
-  MAVEN_OPTS: "-Dhttps.protocols=TLSv1.2 -Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=WARN -Dorg.slf4j.simpleLogger.showDateTime=true -Djava.awt.headless=true"
-  MAVEN_CLI_OPTS: "--batch-mode --errors --fail-at-end --show-version -DinstallAtEnd=true -DdeployAtEnd=true"
-
-cache:
-  paths:
-    - .m2/repository
-
 stages:
   - build
   - test
+  - integration-test
   - report
 
 build:
   stage: build
   script:
-    - mvn $MAVEN_CLI_OPTS compile
+    - mvn compile
   artifacts:
     paths:
       - target/
@@ -26,7 +19,17 @@ test:
   dependencies:
     - build
   script:
-    - mvn $MAVEN_CLI_OPTS test
+    - mvn test
+  artifacts:
+    paths:
+      - target/
+
+integration-test:
+  stage: integration-test
+  dependencies:
+    - build
+  script:
+    - mvn -P test-business,test-consumer clean install
   artifacts:
     paths:
       - target/
@@ -36,7 +39,7 @@ report:
   dependencies:
     - build
   script:
-    - mvn $MAVEN_CLI_OPTS verify sonar:sonar
+    - mvn verify sonar:sonar
   artifacts:
     paths:
       - target/

@@ -38,11 +38,10 @@
     <!-- =============================================================== -->
     <properties>
         <!-- ===== Application properties ===== -->
-        <relative.path.to.parent>myerp-business</relative.path.to.parent>
+        <relative.path.to.parent>.</relative.path.to.parent>
 
         <!-- ===== Sonar properties ===== -->
-<!--        <sonar.jacoco.reportPath>${project.basedir}/${relative.path.to.parent}/target/site/jacoco-aggregate/jacoco.xml</sonar.jacoco.reportPath>-->
-        <sonar.jacoco.reportPath>${project.basedir}/${relative.path.to.parent}/target/coverage-reports/aggregate.exec</sonar.jacoco.reportPath>
+        <sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/${relative.path.to.parent}/target/site/jacoco-aggregate/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
     </properties>
 
 
@@ -138,6 +137,12 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jacoco</groupId>
+            <artifactId>org.jacoco.core</artifactId>
             <scope>test</scope>
         </dependency>
 

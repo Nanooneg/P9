@@ -38,11 +38,10 @@
     <!-- =============================================================== -->
     <properties>
         <!-- ===== Application properties ===== -->
-        <relative.path.to.parent>myerp-model</relative.path.to.parent>
+        <relative.path.to.parent>.</relative.path.to.parent>
 
         <!-- ===== Sonar properties ===== -->
-<!--        <sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/${relative.path.to.parent}/target/site/jacoco-aggregate/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>-->
-        <sonar.jacoco.reportPath>${project.basedir}/${relative.path.to.parent}/target/coverage-reports/jacoco-ut.exec</sonar.jacoco.reportPath>
+        <sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/${relative.path.to.parent}/target/site/jacoco-ut/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
     </properties>
 
 
@@ -83,6 +82,12 @@
         <dependency>
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jacoco</groupId>
+            <artifactId>org.jacoco.core</artifactId>
             <scope>test</scope>
         </dependency>
 

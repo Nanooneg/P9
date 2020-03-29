@@ -49,31 +49,22 @@
 
         <!-- ===== Application properties ===== -->
         <application.name>MyERP</application.name>
-        <relative.path.to.parent>.</relative.path.to.parent>
+        <relative.path.to.parent>..</relative.path.to.parent>
 
         <!-- ===== Version properties ===== -->
         <log4j.version>2.8.1</log4j.version>
         <spring.version>5.1.7.RELEASE</spring.version>
 
         <!-- ===== Sonar properties ===== -->
-<!--        <sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/${relative.path.to.parent}/target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>-->
-<!--        <sonar.jacoco.reportPath>${project.basedir}/${relative.path.to.parent}/target/site/jacoco-aggregate/jacoco.xml</sonar.jacoco.reportPath>-->
-        <sonar.jacoco.reportPath>${project.basedir}/${relative.path.to.parent}/target/jacoco.exec</sonar.jacoco.reportPath>
+        <sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/${relative.path.to.parent}/target/site/jacoco-aggregate/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
         <sonar.projectKey>Nanooneg_P9</sonar.projectKey>
         <sonar.moduleKey>${project.artifactId}</sonar.moduleKey>
-        <!--<sonar.sources>src/main</sonar.sources>-->
-        <!--<sonar.tests>src/test</sonar.tests>-->
         <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
         <sonar.language>java</sonar.language>
-        <sonar.binaries>${project.basedir}/classes</sonar.binaries>
         <!-- Sonar cloud properties -->
         <sonar.organization>nanooneg</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
         <sonar.login>9f797e3d820cc39aa45f8d55eb85d1ff63eebff1</sonar.login>
-<!--        <sonar.host.url>http://localhost:9000</sonar.host.url>-->
-<!--        <sonar.login>cb155c5e8f5ec554692b9ad11655708032da5b85</sonar.login>-->
-        <!-- Below property indicates the pattern of the test suite -->
-        <runSuite>**/*Suite.class</runSuite>
     </properties>
 
 
@@ -331,6 +322,12 @@
                 <version>${spring.version}</version>
                 <scope>test</scope>
             </dependency>
+            <dependency>
+                <groupId>org.jacoco</groupId>
+                <artifactId>org.jacoco.core</artifactId>
+                <version>0.8.3</version>
+                <scope>test</scope>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -505,16 +502,7 @@
                     <groupId>org.jacoco</groupId>
                     <artifactId>jacoco-maven-plugin</artifactId>
                     <version>0.8.5</version>
-                    <configuration>
-                        <destFile>${sonar.jacoco.reportPath}</destFile>
-                        <append>true</append>
-                    </configuration>
                     <executions>
-                        <execution>
-                            <goals>
-                                <goal>prepare-agent</goal>
-                            </goals>
-                        </execution>
                         <execution>
                             <id>report</id>
                             <phase>verify</phase>
@@ -529,23 +517,16 @@
                             </goals>
                             <configuration>
                                 <fileSets>
-                                    <fileSet implementation="org.apache.maven.shared.model.fileset.FileSet">
-                                        <directory>${project.basedir}/target/coverage-reports</directory>
+                                    <fileSet>
+                                        <directory>${project.basedir}</directory>
                                         <includes>
-                                            <include>*.exec</include>
+                                            <include>**/*.exec</include>
                                         </includes>
                                     </fileSet>
                                 </fileSets>
                             </configuration>
                         </execution>
                     </executions>
-                </plugin>
-
-                <!-- ===== Rapport avec Sonarcloud ===== -->
-                <plugin>
-                    <groupId>org.sonarsource.scanner.maven</groupId>
-                    <artifactId>sonar-maven-plugin</artifactId>
-                    <version>3.4.0.905</version>
                 </plugin>
             </plugins>
         </pluginManagement>

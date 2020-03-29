@@ -25,7 +25,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Transactional(propagation = Propagation.REQUIRES_NEW)
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(locations = "/com/dummy/myerp/business/applicationContext.xml")
-public class ComptabiliteManagerImplIT {
+public class ComptabiliteManagerImplIT{
 
     ComptabiliteManagerImpl comptabiliteManagerUnderTest;
     EcritureComptable ecritureComptable;

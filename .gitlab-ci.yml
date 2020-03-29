@@ -28,10 +28,10 @@ integration-test:
   stage: integration-test
   dependencies:
     - build
+#  before_script:
+#    - cd DB-Docker/dev/
+#    - docker-compose up
   script:
-    - cd DB-Docker/dev/
-    - docker-compose up
-    - cd ../../
     - mvn -P test-business,test-consumer clean install
   artifacts:
     paths:

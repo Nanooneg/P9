@@ -36,7 +36,8 @@
     <!-- Properties -->
     <!-- =============================================================== -->
     <properties>
-        <sonar.jacoco.reportPath>${project.basedir}/${relative.path.to.parent}/target/site/jacoco-aggregate/jacoco.xml</sonar.jacoco.reportPath>
+<!--        <sonar.jacoco.reportPath>${project.basedir}/${relative.path.to.parent}/target/site/jacoco-aggregate/jacoco.xml</sonar.jacoco.reportPath>-->
+<!--        <sonar.jacoco.reportPath>${project.basedir}/${relative.path.to.parent}/target/coverage-reports/aggregate.exec</sonar.jacoco.reportPath>-->
     </properties>
 
 
@@ -58,9 +59,36 @@
 
 
         <!-- ========== Test Dependencies ========== -->
-        <dependency>
+        <!--<dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>-->
+
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-junit-jupiter</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
             <scope>test</scope>
         </dependency>
 
@@ -87,13 +115,13 @@
     <!-- =============================================================== -->
     <!-- Profiles -->
     <!-- =============================================================== -->
-    <profiles>
-        <!-- Profile utilisé pour lancer les tests d'intégration de la couche Consumer -->
+    <!--<profiles>
+        &lt;!&ndash; Profile utilisé pour lancer les tests d'intégration de la couche Consumer &ndash;&gt;
         <profile>
             <id>test-consumer</id>
             <build>
                 <plugins>
-                    <!-- Ajout du répertoire src/test-consumer/java en tant que source de test du module -->
+                    &lt;!&ndash; Ajout du répertoire src/test-consumer/java en tant que source de test du module &ndash;&gt;
                     <plugin>
                         <groupId>org.codehaus.mojo</groupId>
                         <artifactId>build-helper-maven-plugin</artifactId>
@@ -123,7 +151,7 @@
                 </testResources>
             </build>
         </profile>
-    </profiles>
+    </profiles>-->
 
 
     <!-- =============================================================== -->
@@ -131,25 +159,53 @@
     <!-- =============================================================== -->
     <build>
         <plugins>
-            <plugin>
+            <!--<plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>0.8.5</version>
                 <executions>
                     <execution>
+                        <id>unit-test</id>
                         <goals>
                             <goal>prepare-agent</goal>
                         </goals>
+                        <phase>test</phase>
                     </execution>
                     <execution>
-                        <id>report</id>
+                        <id>report-test</id>
                         <phase>test</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>integration-test</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                        <phase>integration-test</phase>
+                    </execution>
+                    <execution>
+                        <id>report-integration-test</id>
+                        <phase>integration-test</phase>
                         <goals>
                             <goal>report</goal>
                         </goals>
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>-->
         </plugins>
     </build>
 </project>

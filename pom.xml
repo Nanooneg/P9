@@ -57,11 +57,12 @@
 
         <!-- ===== Sonar properties ===== -->
 <!--        <sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/${relative.path.to.parent}/target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>-->
-        <sonar.jacoco.reportPath>${project.basedir}/${relative.path.to.parent}/target/site/jacoco/jacoco.xml</sonar.jacoco.reportPath>
+<!--        <sonar.jacoco.reportPath>${project.basedir}/${relative.path.to.parent}/target/site/jacoco-aggregate/jacoco.xml</sonar.jacoco.reportPath>-->
+        <sonar.jacoco.reportPath>${project.basedir}/${relative.path.to.parent}/target/jacoco.exec</sonar.jacoco.reportPath>
         <sonar.projectKey>Nanooneg_P9</sonar.projectKey>
-        <sonar.moduleKey>${artifactId}</sonar.moduleKey>
-        <sonar.sources>src/main</sonar.sources>
-        <sonar.tests>src/test</sonar.tests>
+        <sonar.moduleKey>${project.artifactId}</sonar.moduleKey>
+        <!--<sonar.sources>src/main</sonar.sources>-->
+        <!--<sonar.tests>src/test</sonar.tests>-->
         <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
         <sonar.language>java</sonar.language>
         <sonar.binaries>${project.basedir}/classes</sonar.binaries>
@@ -110,9 +111,9 @@
         </profile>
 
         <!-- Profile utilisé pour lancer les tests d'intégration de la couche Consumer -->
-        <profile>
+        <!--<profile>
             <id>test-consumer</id>
-        </profile>
+        </profile>-->
     </profiles>
 
 
@@ -504,6 +505,10 @@
                     <groupId>org.jacoco</groupId>
                     <artifactId>jacoco-maven-plugin</artifactId>
                     <version>0.8.5</version>
+                    <configuration>
+                        <destFile>${sonar.jacoco.reportPath}</destFile>
+                        <append>true</append>
+                    </configuration>
                     <executions>
                         <execution>
                             <goals>
@@ -525,15 +530,22 @@
                             <configuration>
                                 <fileSets>
                                     <fileSet implementation="org.apache.maven.shared.model.fileset.FileSet">
-                                        <directory>${project.basedir}</directory>
+                                        <directory>${project.basedir}/target/coverage-reports</directory>
                                         <includes>
-                                            <include>**/*.exec</include>
+                                            <include>*.exec</include>
                                         </includes>
                                     </fileSet>
                                 </fileSets>
                             </configuration>
                         </execution>
                     </executions>
+                </plugin>
+
+                <!-- ===== Rapport avec Sonarcloud ===== -->
+                <plugin>
+                    <groupId>org.sonarsource.scanner.maven</groupId>
+                    <artifactId>sonar-maven-plugin</artifactId>
+                    <version>3.4.0.905</version>
                 </plugin>
             </plugins>
         </pluginManagement>

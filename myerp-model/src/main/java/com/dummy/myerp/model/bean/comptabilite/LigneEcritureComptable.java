@@ -34,8 +34,7 @@ public class LigneEcritureComptable {
     /**
      * Instantiates a new Ligne ecriture comptable.
      */
-    public LigneEcritureComptable() {
-    }
+    public LigneEcritureComptable() {}
 
     /**
      * Instantiates a new Ligne ecriture comptable.

@@ -5,7 +5,7 @@
                         http://www.springframework.org/schema/beans/spring-beans-4.3.xsd">
 
 
-    <!-- =======   Link to applicationContext.xml, as defined in model module  ====== -->
+    <!-- =======   Link to bootstrapContext.xml, as defined in model module  ====== -->
     <import resource="classpath:com/dummy/myerp/model/applicationContext.xml"/>
 
     

@@ -12,14 +12,11 @@ public class SequenceEcritureComptable {
     /** La dernière valeur utilisée */
     private Integer derniereValeur;
 
-    // TODO erreur ? journal code bidirection ?
-
     // ==================== Constructeurs ====================
     /**
      * Constructeur
      */
-    public SequenceEcritureComptable() {
-    }
+    public SequenceEcritureComptable() {}
 
     /**
      * Constructeur
@@ -37,9 +34,7 @@ public class SequenceEcritureComptable {
     public Integer getAnnee() {
         return annee;
     }
-    public void setAnnee(Integer pAnnee) {
-        annee = pAnnee;
-    }
+    public void setAnnee(Integer pAnnee) { annee = pAnnee; }
     public Integer getDerniereValeur() {
         return derniereValeur;
     }

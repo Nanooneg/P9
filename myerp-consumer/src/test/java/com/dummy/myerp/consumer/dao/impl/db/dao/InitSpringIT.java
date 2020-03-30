@@ -1,4 +1,4 @@
-package com.dummy.myerp.consumer;
+package com.dummy.myerp.consumer.dao.impl.db.dao;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
  * Classe de test de l'initialisation du contexte Spring
  */
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(locations = "/com/dummy/myerp/consumer/applicationContext.xml")
+@ContextConfiguration(locations = "/com/dummy/myerp/consumer/bootstrapContext.xml")
 public class InitSpringIT extends ConsumerTestCase {
 
     /**

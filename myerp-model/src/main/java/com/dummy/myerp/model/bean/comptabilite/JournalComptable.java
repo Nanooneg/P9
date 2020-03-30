@@ -27,8 +27,7 @@ public class JournalComptable {
     /**
      * Instantiates a new Journal comptable.
      */
-    public JournalComptable() {
-    }
+    public JournalComptable() {}
 
     /**
      * Instantiates a new Journal comptable.

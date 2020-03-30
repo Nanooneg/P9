@@ -26,8 +26,7 @@ public class CompteComptable {
     /**
      * Instantiates a new Compte comptable.
      */
-    public CompteComptable() {
-    }
+    public CompteComptable() {}
 
     /**
      * Instantiates a new Compte comptable.

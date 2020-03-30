@@ -1,4 +1,4 @@
-package com.dummy.myerp.consumer;
+package com.dummy.myerp.consumer.dao.impl.db.dao;
 
 
 import com.dummy.myerp.consumer.dao.contrat.DaoProxy;
@@ -14,7 +14,7 @@ public abstract class ConsumerTestCase {
     }
 
     /**
-     * {@link com.dummy.myerp.consumer.dao.contrat.DaoProxy}
+     * {@link DaoProxy}
      */
     private static final DaoProxy DAO_PROXY = SpringRegistry.getDaoProxy();
 

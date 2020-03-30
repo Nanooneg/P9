@@ -1,5 +1,14 @@
 image: maven:latest
 
+variables:
+  POSTGRES_DB: db_myerp
+  POSTGRES_USER: usr_myerp
+  POSTGRES_PASSWORD: myerp
+
+cache:
+  paths:
+    - /root/.m2/repository
+
 stages:
   - build
   - test
@@ -26,16 +35,10 @@ test:
 
 integration-test:
   stage: integration-test
-  dependencies:
-    - build
-#  before_script:
-#    - cd DB-Docker/dev/
-#    - docker-compose up
+  services:
+    - postgres:9.6
   script:
     - mvn -P test-business,test-consumer clean install
-  artifacts:
-    paths:
-      - target/
 
 report:
   stage: report
@@ -43,6 +46,3 @@ report:
     - build
   script:
     - mvn verify sonar:sonar
-  artifacts:
-    paths:
-      - target/

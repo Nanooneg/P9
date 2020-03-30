@@ -1,4 +1,4 @@
-package com.dummy.myerp.consumer;
+package com.dummy.myerp.consumer.dao.impl.db.dao;
 
 import com.dummy.myerp.consumer.dao.contrat.DaoProxy;
 import org.apache.logging.log4j.LogManager;
@@ -22,7 +22,7 @@ public final class SpringRegistry {
 
     /** Nom des fichiers de contexte de l'application */
     private static final String CONTEXT_APPLI_LOCATION
-        = "classpath:/com/dummy/myerp/consumer/applicationContext.xml"; // TODO same context for main ??
+        = "classpath:/com/dummy/myerp/consumer/bootstrapContext.xml";
 
     /** Le context spring de l'application */
     private ApplicationContext contextAppli;
@@ -74,9 +74,9 @@ public final class SpringRegistry {
     }
 
     /**
-     * Renvoie l'instance de {@link com.dummy.myerp.consumer.dao.contrat.DaoProxy} de l'application
+     * Renvoie l'instance de {@link DaoProxy} de l'application
      *
-     * @return {@link com.dummy.myerp.consumer.dao.contrat.DaoProxy}
+     * @return {@link DaoProxy}
      */
     public static DaoProxy getDaoProxy() {
         return (DaoProxy) SpringRegistry.getBean("DaoProxy");

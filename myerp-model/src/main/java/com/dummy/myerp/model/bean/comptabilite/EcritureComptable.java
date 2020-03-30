@@ -24,7 +24,7 @@ public class EcritureComptable {
     /** Journal comptable */
     @NotNull private JournalComptable journal;
     /** The Reference. */
-    @NotNull @Pattern(regexp = "\\w{2}-\\d{4}/\\d{5}") // TODO error 3
+    @NotNull @Pattern(regexp = "\\w{2}-\\d{4}/\\d{5}") // TODO error 3 'w' to accept letters in pattern
     private String reference;
     /** The Date. */
     @NotNull private Date date;
@@ -81,7 +81,7 @@ public class EcritureComptable {
      */
     public boolean isEquilibree() {
         return this.getTotalDebit().compareTo(this.getTotalCredit()) == 0;
-    } // TODO erreur 2
+    } // TODO erreur 2 use compareTo()
 
     /**
      * Calcul et renvoie le total des montants au débit des lignes d'écriture
@@ -107,7 +107,7 @@ public class EcritureComptable {
         BigDecimal vRetour = BigDecimal.ZERO;
         for (LigneEcritureComptable vLigneEcritureComptable : listLigneEcriture) {
             if (vLigneEcritureComptable.getCredit() != null) {
-                vRetour = vRetour.add(vLigneEcritureComptable.getCredit()); // TODO erreur 1
+                vRetour = vRetour.add(vLigneEcritureComptable.getCredit()); // TODO erreur 1 ????
             }
         }
         return vRetour.stripTrailingZeros();

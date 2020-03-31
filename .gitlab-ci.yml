@@ -4,11 +4,6 @@ variables:
   POSTGRES_DB: db_myerp
   POSTGRES_USER: usr_myerp
   POSTGRES_PASSWORD: myerp
-  MAVEN_CLI_OPTS: "--batch-mode"
-
-cache:
-  paths:
-    - ${CI_PROJECT_DIR}/.m2/repository
 
 stages:
   - build
@@ -18,16 +13,16 @@ stages:
 build:
   stage: build
   script:
-    - mvn $MAVEN_CLI_OPTS compile
+    - mvn compile
 
 unit-test:
   stage: test
   script:
-    - mvn $MAVEN_CLI_OPTS test
+    - mvn test
 
 integration-test:
   stage: integration-test
   services:
     - postgres:9.6
   script:
-    - mvn $MAVEN_CLI_OPTS -P test-business,test-consumer clean verify sonar:sonar
+    - mvn -P test-business,test-consumer clean verify sonar:sonar

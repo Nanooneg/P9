@@ -36,7 +36,7 @@ integration-test:
   services:
     - docker:latest
   before_script:
-    - cd BB-Docker/dev
+    - cd DB-Docker/dev
     - docker-compose up -d --build
     - docker ps
     - cd ../..

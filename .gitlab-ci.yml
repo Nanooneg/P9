@@ -11,7 +11,6 @@ stages:
   - build
   - test
   - integration-test
-  - report
 
 build:
   stage: build
@@ -19,7 +18,13 @@ build:
     - mvn compile
   image: maven:3.5.0-jdk-8
 
-test:
+unit-test:
+  stage: test
+  script:
+    - mvn test
+  image: maven:3.5.0-jdk-8
+
+integration-test:
   stage: integration-test
   services:
     - postgres:9.6

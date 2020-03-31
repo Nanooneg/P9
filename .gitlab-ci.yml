@@ -13,28 +13,16 @@ stages:
   - integration-test
   - report
 
-validate:jdk8:
+build:
   stage: build
   script:
     - mvn compile
   image: maven:3.5.0-jdk-8
 
-unit-test:jdk8:
-  stage: test
-  script:
-    - mvn test
-  image: maven:3.5.0-jdk-8
-
-integration-test:jdk8:
+test:
   stage: integration-test
   services:
     - postgres:9.6
   script:
-    - mvn -P test-business,test-consumer clean install
-  image: maven:3.5.0-jdk-8
-
-report:
-  stage: report
-  script:
-    - mvn verify sonar:sonar
+    - mvn -P test-business,test-consumer clean verify sonar:sonar
   image: maven:3.5.0-jdk-8

@@ -1,9 +1,12 @@
 image: maven:latest
 
-variables:
-  POSTGRES_DB: db_myerp
-  POSTGRES_USER: usr_myerp
-  POSTGRES_PASSWORD: myerp
+#services:
+#  - postgres:latest
+
+#variables:
+#  POSTGRES_DB: db_myerp
+#  POSTGRES_USER: usr_myerp
+#  POSTGRES_PASSWORD: myerp
 
 cache:
   paths:
@@ -19,30 +22,28 @@ build:
   stage: build
   script:
     - mvn compile
-  artifacts:
-    paths:
-      - target/
 
 test:
   stage: test
-  dependencies:
-    - build
   script:
     - mvn test
-  artifacts:
-    paths:
-      - target/
 
 integration-test:
   stage: integration-test
+#  services:
+#    - name: postgres:alpine
+#      command: ["sh", "-c", "/bin/su", "-", "postgres", "postgres", "&&", "psql", "-U","$POSTGRES_USER", "--password", "$POSTGRES_PASSWORD", "$POSTGRES_DB", "<", "./DB-Docker/dev/db/init/docker-entrypoint-initdb.d/01_create_schema.sql" ]
   services:
-    - postgres:9.6
+    - docker:latest
+  before_script:
+    - cd BB-Docker/dev
+    - docker-compose up -d --build
+    - docker ps
+    - cd ../..
   script:
     - mvn -P test-business,test-consumer clean install
 
 report:
   stage: report
-  dependencies:
-    - build
   script:
     - mvn verify sonar:sonar

@@ -22,7 +22,7 @@ build:
 unit-test:
   stage: test
   script:
-    - mvn surfire:test
+    - mvn test
   image: maven:3.5.0-jdk-8
 
 integration-test:

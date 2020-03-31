@@ -1,17 +1,11 @@
-image: maven:latest
-
-services:
-  - postgres:latest
-
 variables:
   POSTGRES_DB: db_myerp
   POSTGRES_USER: usr_myerp
   POSTGRES_PASSWORD: myerp
-  POSTGRES_HOST_AUTH_METHOD: trust
 
 cache:
   paths:
-    - /root/.m2/repository
+    - /.m2/repository
 
 stages:
   - build
@@ -19,24 +13,28 @@ stages:
   - integration-test
   - report
 
-build:
+validate:jdk8:
   stage: build
   script:
     - mvn compile
+  image: maven:3.5.0-jdk-8
 
-test:
+unit-test:jdk8:
   stage: test
   script:
     - mvn test
+  image: maven:3.5.0-jdk-8
 
-integration-test:
+integration-test:jdk8:
   stage: integration-test
   services:
-    - postgres:alpine
+    - postgres:9.6
   script:
     - mvn -P test-business,test-consumer clean install
+  image: maven:3.5.0-jdk-8
 
 report:
   stage: report
   script:
     - mvn verify sonar:sonar
+  image: maven:3.5.0-jdk-8

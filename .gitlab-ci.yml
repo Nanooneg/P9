@@ -18,23 +18,32 @@ build:
   script:
     - mvn compile
   image: maven:3.5.0-jdk-8
+  artifacts:
+    paths:
+      - target/
 
 unit-test:
   stage: test
+  needs:
+    - job: build
+      artifacts: true
   script:
     - mvn test
-  only:
-    changes:
-      - root/**/*Test.java
   image: maven:3.5.0-jdk-8
+  artifacts:
+    paths:
+      - target/
 
 integration-test:
   stage: integration-test
   services:
     - postgres:9.6
+  needs:
+    - job: unit-test
+      artifacts: true
   script:
     - mvn -P test-business,test-consumer clean verify sonar:sonar
-  only:
-    changes:
-      - root/**/*IT.java
   image: maven:3.5.0-jdk-8
+  artifacts:
+    paths:
+      - target/

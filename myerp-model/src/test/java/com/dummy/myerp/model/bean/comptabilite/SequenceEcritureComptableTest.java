@@ -18,9 +18,4 @@ public class SequenceEcritureComptableTest {
         assertThat(result).isEqualTo("SequenceEcritureComptable{annee=2020, derniereValeur=1}");
     }
 
-    @Test
-    public void test (){
-
-    }
-
 }

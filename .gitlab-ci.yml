@@ -1,0 +1,51 @@
+image: docker:latest
+
+services:
+  - docker:dind
+
+cache:
+  paths:
+    - /root/.m2/repository
+
+stages:
+  - build
+  - test
+  - integration-test
+  - report
+
+build:
+  image: maven:latest
+  stage: build
+  script:
+    - mvn compile
+
+test:
+  image: maven:latest
+  stage: test
+  script:
+    - mvn test
+
+integration-test:
+  image: maven:latest
+  services:
+    - docker:dind
+  stage: integration-test
+  before_script:
+    - apk update
+    - apk upgrade
+    - apk add python python-dev py-pip build-base
+    - curl -L https://github.com/docker/compose/releases/download/1.8.0/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
+    - chmod +x /usr/local/bin/docker-compose
+    - pip install docker-compose
+    - cd DB-Docker/dev
+    - docker-compose up -d --build
+    - docker ps
+    - cd ../..
+  script:
+    - mvn -P test-business,test-consumer clean install
+
+report:
+  image: maven:latest
+  stage: report
+  script:
+    - mvn verify sonar:sonar

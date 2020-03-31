@@ -4,11 +4,12 @@ variables:
   POSTGRES_DB: db_myerp
   POSTGRES_USER: usr_myerp
   POSTGRES_PASSWORD: myerp
-  MAVEN_OPTS: "-Dmaven.repo.local=maven.repository -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=WARN"
+  MAVEN_OPTS: "-Dmaven.repo.local=${CI_PROJECT_DIR}/.m2/repository"
+  MAVEN_CLI_OPTS: "-s .m2/settings.xml --batch-mode"
 
 cache:
   paths:
-    - maven.repository/
+    - ${CI_PROJECT_DIR}/.m2/repository
 
 stages:
   - build
@@ -18,16 +19,28 @@ stages:
 build:
   stage: build
   script:
-    - mvn compile
+    - mvn $MAVEN_CLI_OPTS compile
+  artifacts:
+    expire_in: 10 min
+    paths:
+      - "*/target"
+  only:
+    - master
 
 unit-test:
   stage: test
   script:
-    - mvn test
+    - find . -name "*.class" -exec touch {} \+
+    - mvn $MAVEN_CLI_OPTS test
+  only:
+    - master
 
 integration-test:
   stage: integration-test
   services:
     - postgres:9.6
   script:
-    - mvn -P test-business,test-consumer clean verify sonar:sonar
+    - find . -name "*.class" -exec touch {} \+
+    - mvn $MAVEN_CLI_OPTS -P test-business,test-consumer clean verify sonar:sonar
+  only:
+    - master

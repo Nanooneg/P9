@@ -19,15 +19,10 @@ build:
   stage: build
   script:
     - mvn $MAVEN_CLI_OPTS compile
-  artifacts:
-    expire_in: 10 min
-    paths:
-      - "*/target"
 
 unit-test:
   stage: test
   script:
-    - find . -name "*.class" -exec touch {} \+
     - mvn $MAVEN_CLI_OPTS test
 
 integration-test:
@@ -35,5 +30,4 @@ integration-test:
   services:
     - postgres:9.6
   script:
-    - find . -name "*.class" -exec touch {} \+
     - mvn $MAVEN_CLI_OPTS -P test-business,test-consumer clean verify sonar:sonar

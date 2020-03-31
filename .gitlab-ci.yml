@@ -23,6 +23,9 @@ unit-test:
   stage: test
   script:
     - mvn test
+  only:
+    changes:
+      - root/**/*Test.java
   image: maven:3.5.0-jdk-8
 
 integration-test:
@@ -31,4 +34,7 @@ integration-test:
     - postgres:9.6
   script:
     - mvn -P test-business,test-consumer clean verify sonar:sonar
+  only:
+    changes:
+      - root/**/*IT.java
   image: maven:3.5.0-jdk-8

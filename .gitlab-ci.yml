@@ -1,3 +1,5 @@
+image: maven:latest
+
 variables:
   POSTGRES_DB: db_myerp
   POSTGRES_USER: usr_myerp
@@ -17,13 +19,11 @@ build:
   stage: build
   script:
     - mvn compile
-  image: maven:3.5.0-jdk-8
 
 unit-test:
   stage: test
   script:
     - mvn test
-  image: maven:3.5.0-jdk-8
 
 integration-test:
   stage: integration-test
@@ -31,4 +31,3 @@ integration-test:
     - postgres:9.6
   script:
     - mvn -P test-business,test-consumer clean verify sonar:sonar
-  image: maven:3.5.0-jdk-8

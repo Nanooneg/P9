@@ -5,7 +5,7 @@ variables:
 
 cache:
   paths:
-    - .m2/repository
+    - root/.m2/repository
     - target/
 
 stages:
@@ -22,7 +22,7 @@ build:
 unit-test:
   stage: test
   script:
-    - mvn test
+    - mvn surfire:test
   image: maven:3.5.0-jdk-8
 
 integration-test:
@@ -30,5 +30,6 @@ integration-test:
   services:
     - postgres:9.6
   script:
-    - mvn -P test-business,test-consumer clean verify sonar:sonar
+#    - mvn -P test-business,test-consumer clean verify sonar:sonar
+    - mvn -P test-business,test-consumer failsafe:integration-test
   image: maven:3.5.0-jdk-8

@@ -12,6 +12,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,6 +26,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Transactional(propagation = Propagation.REQUIRES_NEW)
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(locations = "/com/dummy/myerp/business/applicationContext.xml")
+@Sql(scripts = {"classpath:/com/dummy/myerp/business/01_create_schema.sql",
+        "classpath:/com/dummy/myerp/business/02_create_tables.sql",
+        "classpath:/com/dummy/myerp/business/21_insert_data_demo.sql" })
 public class ComptabiliteManagerImplIT{
 
     ComptabiliteManagerImpl comptabiliteManagerUnderTest;

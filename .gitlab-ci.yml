@@ -3,6 +3,12 @@ image: maven:latest
 services:
   - postgres:latest
 
+variables:
+  POSTGRES_DB: db_myerp
+  POSTGRES_USER: usr_myerp
+  POSTGRES_PASSWORD: myerp
+  POSTGRES_HOST_AUTH_METHOD: trust
+
 cache:
   paths:
     - /root/.m2/repository
@@ -27,15 +33,6 @@ integration-test:
   stage: integration-test
   services:
     - postgres:alpine
-  variables:
-      POSTGRES_DB: db_myerp
-      POSTGRES_USER: usr_myerp
-      POSTGRES_PASSWORD: myerp
-  before_script:
-      - export PGPASSWORD=$POSTGRES_PASSWORD
-      - psql --version
-      - psql -h "postgres" -U "$POSTGRES_USER" -d "$POSTGRES_DB" -c "SELECT VERSION();"
-      - psql -h "postgres" -U "$POSTGRES_USER" -v ON_ERROR_STOP=1 --quiet "$POSTGRES_DB" < ./DB-Docker/dev/init/db/docker-entrypoint-initdb.d/01_create_schema.sql
   script:
     - mvn -P test-business,test-consumer clean install
 

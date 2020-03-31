@@ -1,7 +1,5 @@
 package com.dummy.myerp.consumer.dao.impl.db.dao;
 
-import com.dummy.myerp.consumer.dao.contrat.ComptabiliteDao;
-import com.dummy.myerp.consumer.db.AbstractDbConsumer;
 import com.dummy.myerp.model.bean.comptabilite.*;
 import com.dummy.myerp.technical.exception.NotFoundException;
 import org.apache.commons.lang3.ObjectUtils;
@@ -9,10 +7,9 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,6 +22,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Transactional(propagation = Propagation.REQUIRES_NEW)
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(locations = "/com/dummy/myerp/consumer/bootstrapContext.xml")
+@Sql(scripts = {"classpath:/com/dummy/myerp/consumer/01_create_schema.sql",
+                "classpath:/com/dummy/myerp/consumer/02_create_tables.sql",
+                "classpath:/com/dummy/myerp/consumer/21_insert_data_demo.sql" })
 public class ComptabiliteDaoImplIT {
 
     static ComptabiliteDaoImpl comptabiliteDaoUnderTest;

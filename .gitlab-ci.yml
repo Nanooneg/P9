@@ -1,9 +1,12 @@
-image: maven:latest
-
 variables:
   POSTGRES_DB: db_myerp
   POSTGRES_USER: usr_myerp
   POSTGRES_PASSWORD: myerp
+
+cache:
+  paths:
+    - /root/.m2/repository
+    - /target/
 
 stages:
   - build
@@ -14,15 +17,33 @@ build:
   stage: build
   script:
     - mvn compile
+  image: maven:3.5.0-jdk-8
+  artifacts:
+    paths:
+      - target/
 
 unit-test:
   stage: test
+  needs:
+    - job: build
+      artifacts: true
   script:
     - mvn test
+  image: maven:3.5.0-jdk-8
+  artifacts:
+    paths:
+      - target/
 
 integration-test:
   stage: integration-test
   services:
     - postgres:9.6
+  needs:
+    - job: unit-test
+      artifacts: true
   script:
     - mvn -P test-business,test-consumer clean verify sonar:sonar
+  image: maven:3.5.0-jdk-8
+  artifacts:
+    paths:
+      - target/

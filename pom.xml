@@ -102,9 +102,9 @@
         </profile>
 
         <!-- Profile utilisé pour lancer les tests d'intégration de la couche Consumer -->
-        <!--<profile>
+        <profile>
             <id>test-consumer</id>
-        </profile>-->
+        </profile>
     </profiles>
 
 

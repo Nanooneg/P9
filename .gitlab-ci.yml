@@ -6,7 +6,6 @@ variables:
 cache:
   paths:
     - /root/.m2/repository
-    - /target/
 
 stages:
   - build

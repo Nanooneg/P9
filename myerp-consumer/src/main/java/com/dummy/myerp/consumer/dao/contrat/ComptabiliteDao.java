@@ -83,25 +83,28 @@ public interface ComptabiliteDao {
     void deleteEcritureComptable(Integer pId);
 
     /**
-     * TODO
-     * @param pJournalCode
-     * @param pCurrentYear
-     * @return
-     * @throws NotFoundException
+     * Renvoi la Sequence d'écriture comptable correspondante au Journal comptable pour l'année donnée
+     *
+     * @param pJournalCode -
+     * @param pCurrentYear -
+     * @return {@link SequenceEcritureComptable}
+     * @throws NotFoundException Si la séquence n'est pas trouvée
      */
     SequenceEcritureComptable getSequenceEcritureComptable(String pJournalCode, int pCurrentYear) throws NotFoundException;
 
     /**
-     * TODO
-     * @param pSequenceEcritureComptable
-     * @param pJournalCode
+     * Insert une nouvelle Séquence d'écriture comptable
+     *
+     * @param pSequenceEcritureComptable -
+     * @param pJournalCode -
      */
     void insertSequenceEcritureComptable(SequenceEcritureComptable pSequenceEcritureComptable, String pJournalCode);
 
     /**
-     * TODO
-     * @param pSequenceEcritureComptable
-     * @param pJournalCode
+     * Met à jour une Séquence d'écriture comptable
+     *
+     * @param pSequenceEcritureComptable -
+     * @param pJournalCode -
      */
     void updateSequenceEcritureComptable(SequenceEcritureComptable pSequenceEcritureComptable, String pJournalCode);
 }

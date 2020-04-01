@@ -1,15 +1,12 @@
 package com.dummy.myerp.business.impl;
 
+import com.dummy.myerp.business.contrat.BusinessProxy;
+import com.dummy.myerp.consumer.dao.contrat.DaoProxy;
+
 import javax.validation.Configuration;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
-
-import com.dummy.myerp.business.contrat.BusinessProxy;
-import com.dummy.myerp.consumer.dao.contrat.DaoProxy;
-import com.dummy.myerp.model.bean.comptabilite.SequenceEcritureComptable;
-
-import java.util.List;
 
 
 /**
@@ -83,7 +80,6 @@ public abstract class AbstractBusinessManager {
     protected Validator getConstraintValidator() {
         Configuration<?> vConfiguration = Validation.byDefaultProvider().configure();
         ValidatorFactory vFactory = vConfiguration.buildValidatorFactory();
-        Validator vValidator = vFactory.getValidator();
-        return vValidator;
+        return vFactory.getValidator();
     }
 }

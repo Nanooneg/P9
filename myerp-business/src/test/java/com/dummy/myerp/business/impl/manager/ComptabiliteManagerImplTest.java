@@ -39,7 +39,7 @@ public class ComptabiliteManagerImplTest {
         comptabiliteManagerUnderTest = new ComptabiliteManagerImpl();
         ecritureComptable = new EcritureComptable();
         ecritureComptable.setId(1);
-        ecritureComptable.setJournal(new JournalComptable("AC", "Achat"));
+        ecritureComptable.setJournal(new JournalComptable("BQ", "Achat"));
         ecritureComptable.setDate(new Date());
         ecritureComptable.setLibelle("Libelle");
         ecritureComptable.setReference("BQ-2020/00001");
@@ -349,7 +349,7 @@ public class ComptabiliteManagerImplTest {
         // GIVEN
         initMock();
 
-        when(mockDaoProxy.getComptabiliteDao().getSequenceEcritureComptable("AC",2020)).thenReturn(null);
+        when(mockDaoProxy.getComptabiliteDao().getSequenceEcritureComptable("BQ",2020)).thenReturn(null);
 
         // WHEN
         comptabiliteManagerUnderTest.addReference(ecritureComptable);
@@ -367,7 +367,7 @@ public class ComptabiliteManagerImplTest {
         // GIVEN
         initMock();
 
-        when(mockDaoProxy.getComptabiliteDao().getSequenceEcritureComptable("AC",2020))
+        when(mockDaoProxy.getComptabiliteDao().getSequenceEcritureComptable("BQ",2020))
                 .thenReturn(new SequenceEcritureComptable(2020,15));
 
         // WHEN

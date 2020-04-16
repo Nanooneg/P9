@@ -157,7 +157,11 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
         String[] reference = pEcritureComptable.getReference().split("[-/]");
         int currentYear = Calendar.getInstance().get(Calendar.YEAR);
         int yearInReference = Integer.parseInt(reference[1]);
-        if (currentYear != yearInReference) {
+        String ecritureComptableJournalCode = pEcritureComptable.getJournal().getCode();
+        String journalCodeInReference = reference[0];
+        String sequence = reference[2];
+        if (currentYear != yearInReference || ecritureComptableJournalCode.equalsIgnoreCase(journalCodeInReference)
+                || sequence.length() != 5) {
             throw new FunctionalException("La référence de l'écriture comptable doit contenir l'année courante.");
         }
     }

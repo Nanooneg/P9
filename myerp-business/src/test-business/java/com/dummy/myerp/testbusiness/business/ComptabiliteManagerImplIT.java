@@ -107,6 +107,7 @@ public class ComptabiliteManagerImplIT{
         String newLibelle = "NewLibelle";
         int ecritureComptableFromDbID = ecritureComptableFromDb.getId();
         ecritureComptableFromDb.setLibelle(newLibelle);
+        ecritureComptableFromDb.setJournal(new JournalComptable("BQ", "Banque"));
         ecritureComptableFromDb.setReference("BQ-2020/00011");
         comptabiliteManagerUnderTest.updateEcritureComptable(ecritureComptableFromDb);
         ecritureComptableList = comptabiliteManagerUnderTest.getListEcritureComptable();

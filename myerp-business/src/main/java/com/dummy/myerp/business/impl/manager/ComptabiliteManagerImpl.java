@@ -160,9 +160,14 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
         String ecritureComptableJournalCode = pEcritureComptable.getJournal().getCode();
         String journalCodeInReference = reference[0];
         String sequence = reference[2];
-        if (currentYear != yearInReference || ecritureComptableJournalCode.equalsIgnoreCase(journalCodeInReference)
-                || sequence.length() != 5) {
+        if (currentYear != yearInReference) {
             throw new FunctionalException("La référence de l'écriture comptable doit contenir l'année courante.");
+        }
+        if (!ecritureComptableJournalCode.equalsIgnoreCase(journalCodeInReference)) {
+            throw new FunctionalException("La référence de l'écriture comptable doit contenir le code du journal comptable.");
+        }
+        if (sequence.length() != 5) {
+            throw new FunctionalException("La référence de l'écriture comptable doit contenir une séquence de 5 chiffres.");
         }
     }
 
